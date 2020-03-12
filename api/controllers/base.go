@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
+	"github.com/nayonacademy/conferenceTracker/api/models"
 	"log"
 	"net/http"
 )
@@ -14,6 +16,15 @@ type Server struct {
 }
 
 func (server *Server) Initialize(){
+	var err error
+	server.DB, err = gorm.Open("sqlite3","./gorm.db")
+	if err != nil{
+		fmt.Printf("cannot connect to database")
+		log.Fatal("this is error :",err)
+	}else{
+		fmt.Printf("we are connected to database")
+	}
+	server.DB.Debug().AutoMigrate(&models.User{})
 	server.Router = mux.NewRouter()
 	server.InitializeRoutes()
 }
