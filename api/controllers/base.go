@@ -19,10 +19,10 @@ func (server *Server) Initialize(){
 	var err error
 	server.DB, err = gorm.Open("sqlite3","./gorm.db")
 	if err != nil{
-		fmt.Printf("cannot connect to database")
+		fmt.Printf("cannot connect to database\n")
 		log.Fatal("this is error :",err)
 	}else{
-		fmt.Printf("we are connected to database")
+		fmt.Printf("we are connected to database\n")
 	}
 	server.DB.Debug().AutoMigrate(&models.User{})
 	server.Router = mux.NewRouter()
