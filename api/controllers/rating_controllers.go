@@ -17,5 +17,5 @@ func (server *Server) UpdateRating(){
 }
 
 func (server *Server) DeleteRating(){
-	
+
 }
