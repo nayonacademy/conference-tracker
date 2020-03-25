@@ -1,0 +1,17 @@
+version: '3'
+# Define services
+services:
+
+  # App Service
+  app:
+    # Configuration for building the docker image for the service
+    build:
+      context: . # Use an image built from the specified dockerfile in the current directory.
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000" # Forward the exposed port 5000 on the container to port 5000 on the host machine
+    restart: unless-stopped
+    volumes:
+      - . :/usr/src/app/
+    env_file:
+      - ./.env
