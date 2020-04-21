@@ -24,7 +24,7 @@ func (server *Server) Initialize(){
 	}else{
 		fmt.Printf("we are connected to database\n")
 	}
-	server.DB.Debug().AutoMigrate(&models.User{})
+	server.DB.Debug().AutoMigrate(&models.User{}, &models.Category{}, &models.Speaker{})
 	server.Router = mux.NewRouter()
 	server.InitializeRoutes()
 }
