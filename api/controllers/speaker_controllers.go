@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/nayonacademy/conferenceTracker/api/models"
@@ -60,5 +61,64 @@ func (server *Server) GetSpeaker(w http.ResponseWriter, r *http.Request) {
 	}
 	responses.JSON(w, http.StatusOK, speakerGotten)
 }
-func (server *Server) UpdateSpeaker(w http.ResponseWriter, r *http.Request){}
-func (server *Server) DeleteSpeaker(w http.ResponseWriter, r *http.Request) {}
+func (server *Server) UpdateSpeaker(w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+
+	pid, err := strconv.ParseUint(vars["id"], 10, 64)
+	if err != nil{
+		responses.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+
+	speaker := models.Speaker{}
+	err = server.DB.Debug().Model(models.Speaker{}).Where("id = ?", pid).Take(&speaker).Error
+	if err != nil{
+		responses.ERROR(w, http.StatusBadRequest, errors.New("speaker not found"))
+		return
+	}
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil{
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+	speakerUpdate := models.Speaker{}
+	err = json.Unmarshal(body, &speakerUpdate)
+	if err != nil{
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+	speakerUpdate.Prepare()
+	err = speakerUpdate.Validate()
+	if err != nil{
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+	speakerUpdate.ID = speaker.ID
+	speakerUpdated, err := speakerUpdate.UpdateSpeaker(server.DB)
+	if err != nil{
+		responses.ERROR(w, http.StatusUnprocessableEntity, err)
+		return
+	}
+	responses.JSON(w, http.StatusOK, speakerUpdated)
+}
+func (server *Server) DeleteSpeaker(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	pid, err := strconv.ParseUint(vars["id"], 10, 64)
+	if err != nil{
+		responses.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+	speaker := models.Speaker{}
+	err = server.DB.Debug().Model(models.Speaker{}).Where("id = ?", pid).Take(&speaker).Error
+	if err != nil{
+		responses.ERROR(w, http.StatusNotFound, errors.New("unauthorized"))
+		return
+	}
+	_, err = speaker.DeleteSpeaker(server.DB, pid)
+	if err != nil{
+		responses.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+	w.Header().Set("Entity", fmt.Sprintf("%d", pid))
+	responses.JSON(w, http.StatusNoContent,"")
+}

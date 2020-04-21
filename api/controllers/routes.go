@@ -15,9 +15,9 @@ func (server *Server) InitializeRoutes(){
 	server.Router.HandleFunc("/categories/{id}", middlewares.SetMiddlewareJSON(server.UpdateCategory)).Methods("PUT")
 	server.Router.HandleFunc("/categories/{id}", middlewares.SetMiddlewareJSON(server.DeleteCategory)).Methods("DELETE")
 	// Speaker create, update, delete
-	server.Router.HandleFunc("/speakers", middlewares.SetMiddlewareJSON(server.CreateCategory)).Methods("POST")
-	server.Router.HandleFunc("/speakers", middlewares.SetMiddlewareJSON(server.GetCategories)).Methods("GET")
-	server.Router.HandleFunc("/speakers/{id}", middlewares.SetMiddlewareJSON(server.GetCategory)).Methods("GET")
-	server.Router.HandleFunc("/speakers/{id}", middlewares.SetMiddlewareJSON(server.UpdateCategory)).Methods("PUT")
-	server.Router.HandleFunc("/speakers/{id}", middlewares.SetMiddlewareJSON(server.DeleteCategory)).Methods("DELETE")
+	server.Router.HandleFunc("/speakers", middlewares.SetMiddlewareJSON(server.CreateSpeaker)).Methods("POST")
+	server.Router.HandleFunc("/speakers", middlewares.SetMiddlewareJSON(server.GetSpeakers)).Methods("GET")
+	server.Router.HandleFunc("/speakers/{id}", middlewares.SetMiddlewareJSON(server.GetSpeaker)).Methods("GET")
+	server.Router.HandleFunc("/speakers/{id}", middlewares.SetMiddlewareJSON(server.UpdateSpeaker)).Methods("PUT")
+	server.Router.HandleFunc("/speakers/{id}", middlewares.SetMiddlewareJSON(server.DeleteSpeaker)).Methods("DELETE")
 }
