@@ -1,7 +1,23 @@
 package models
 
-type Conference struct {
+import "github.com/jinzhu/gorm"
 
+type Conference struct {
+	gorm.Model
+	Name string
+	Website string
+	About string
+	Phone string
+	Email string
+	Address string
+	City string
+	ZipCode string
+	Speakers []Speaker
+	Facebook string
+	Twitter string
+	Instagram string
+	OrganizerID int16
+	Locations []Location
 }
 
 func (c *Conference) Prepare(){
