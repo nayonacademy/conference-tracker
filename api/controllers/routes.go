@@ -20,4 +20,11 @@ func (server *Server) InitializeRoutes(){
 	server.Router.HandleFunc("/speakers/{id}", middlewares.SetMiddlewareJSON(server.GetSpeaker)).Methods("GET")
 	server.Router.HandleFunc("/speakers/{id}", middlewares.SetMiddlewareJSON(server.UpdateSpeaker)).Methods("PUT")
 	server.Router.HandleFunc("/speakers/{id}", middlewares.SetMiddlewareJSON(server.DeleteSpeaker)).Methods("DELETE")
+	// Conference create, update, delete
+	server.Router.HandleFunc("/conferences", middlewares.SetMiddlewareJSON(server.CreateConference)).Methods("POST")
+	server.Router.HandleFunc("/conferences", middlewares.SetMiddlewareJSON(server.GetConferences)).Methods("GET")
+	server.Router.HandleFunc("/conferences/{id}", middlewares.SetMiddlewareJSON(server.GetConference)).Methods("GET")
+	server.Router.HandleFunc("/conferences/{id}", middlewares.SetMiddlewareJSON(server.UpdateConference)).Methods("PUT")
+	server.Router.HandleFunc("/conferences/{id}", middlewares.SetMiddlewareJSON(server.DeleteConference)).Methods("DELETE")
+
 }
