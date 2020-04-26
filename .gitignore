@@ -22,3 +22,4 @@ _testmain.go
 *.db
 *.xml
 *.iml
+main
