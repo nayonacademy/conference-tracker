@@ -7,9 +7,11 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/nayonacademy/conferenceTracker/api/models"
 	"github.com/nayonacademy/conferenceTracker/api/responses"
+	"github.com/nayonacademy/conferenceTracker/api/sendgrid"
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"crypto/rand"
 )
 
 func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -37,6 +39,24 @@ func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
 		responses.ERROR(w, http.StatusInternalServerError, errors.New("format error"))
 		return
 	}
+	// verification key generate and send in email and store in redisservice
+	verification_key := make([]byte, 14)
+	_, err = rand.Read(verification_key)
+	if err != nil {
+		return
+	}
+	email_send := sendgrid.SendGrid{
+		Subject:          "Account verification",
+		FromEmail:        "info@conferencetracker.com",
+		FromName:         "Admin",
+		ToEmail:          userCreated.Email,
+		ToName:           userCreated.Nickname,
+		PlainTextContent: "",
+		HtmlContent:      string(verification_key),
+	}
+	_, _ = email_send.EmailSend()
+
+	//email_send.
 	w.Header().Set("Location", fmt.Sprintf("%s%s/%d", r.Host, r.RequestURI, userCreated.ID))
 	responses.JSON(w, http.StatusCreated, userCreated)
 }

@@ -8,7 +8,6 @@ import (
 	"os"
 )
 type SendGrid struct {
-	Email string
 	Subject string
 	FromEmail string
 	FromName string
@@ -22,7 +21,7 @@ type Response struct {
 	Headers     map[string][]string  `json:"headers"`
 	Body        string    `json:"body"`
 }
-func (s SendGrid) emailSend() (string, error){
+func (s *SendGrid) EmailSend() (string, error){
 	from := mail.NewEmail(s.FromName, s.FromEmail)
 	to := mail.NewEmail(s.ToName, s.ToEmail)
 	message := mail.NewSingleEmail(from, s.Subject, to, s.PlainTextContent, s.HtmlContent)
@@ -31,16 +30,16 @@ func (s SendGrid) emailSend() (string, error){
 	if err != nil {
 		log.Println(err)
 		return "", nil
-	} else {
+	}
 		//fmt.Println(response.StatusCode)
 		//fmt.Println(response.Body)
 		//fmt.Println(response.Headers)
-		res := &Response{
-			StatusCode: response.StatusCode,
-			Headers: response.Headers,
-			Body: response.Body,
-		}
-		content, err := json.Marshal(res)
-		return string(content), err
+	res := &Response{
+		StatusCode: response.StatusCode,
+		Headers: response.Headers,
+		Body: response.Body,
 	}
+	content, err := json.Marshal(res)
+	return string(content), err
+
 }

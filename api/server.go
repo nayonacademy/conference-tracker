@@ -6,5 +6,6 @@ var server = controllers.Server{}
 
 func Run(){
 	server.Initialize()
+	server.InitializeRedis()
 	server.Run(":8000")
 }
