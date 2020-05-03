@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"fmt"
+	"github.com/go-redis/redis"
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
@@ -13,8 +14,12 @@ import (
 type Server struct {
 	DB	*gorm.DB
 	Router	*mux.Router
+	c *redis.Client
 }
-
+type RedisValue struct {
+	Name  string
+	Email string
+}
 func (server *Server) Initialize(){
 	var err error
 	server.DB, err = gorm.Open("sqlite3","./gorm.db")
@@ -30,6 +35,6 @@ func (server *Server) Initialize(){
 }
 
 func (server *Server) Run(addr string){
-	fmt.Println("Listening to port ", addr)
+	fmt.Println("Listening to port... ", addr)
 	log.Fatal(http.ListenAndServe(addr, server.Router))
 }

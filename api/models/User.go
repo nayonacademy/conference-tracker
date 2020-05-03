@@ -19,6 +19,7 @@ type User struct {
 	Password  string    `gorm:"size:100;not null;" json:"password"`
 	CreatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"created_at"`
 	UpdatedAt time.Time `gorm:"default:CURRENT_TIMESTAMP" json:"updated_at"`
+	IsActive  bool      `gorm:"default:false" json:"is_active"`
 }
 
 func Hash(password string) ([]byte, error) {
@@ -46,17 +47,18 @@ func (u *User) Prepare() {
 	u.UpdatedAt = time.Now()
 }
 
+
 func (u *User) Validate(action string) error {
 	switch strings.ToLower(action) {
 	case "update":
 		if u.Nickname == "" {
-			return errors.New("Required Nickname")
+			return errors.New("required Nickname")
 		}
 		if u.Password == "" {
-			return errors.New("Required Password")
+			return errors.New("required Password")
 		}
 		if u.Email == "" {
-			return errors.New("Required Email")
+			return errors.New("required Email")
 		}
 		if err := checkmail.ValidateFormat(u.Email); err != nil {
 			return errors.New("Invalid Email")
@@ -65,10 +67,10 @@ func (u *User) Validate(action string) error {
 		return nil
 	case "login":
 		if u.Password == "" {
-			return errors.New("Required Password")
+			return errors.New("required Password")
 		}
 		if u.Email == "" {
-			return errors.New("Required Email")
+			return errors.New("required Email")
 		}
 		if err := checkmail.ValidateFormat(u.Email); err != nil {
 			return errors.New("Invalid Email")
@@ -77,13 +79,13 @@ func (u *User) Validate(action string) error {
 
 	default:
 		if u.Nickname == "" {
-			return errors.New("Required Nickname")
+			return errors.New("required Nickname")
 		}
 		if u.Password == "" {
-			return errors.New("Required Password")
+			return errors.New("required Password")
 		}
 		if u.Email == "" {
-			return errors.New("Required Email")
+			return errors.New("required Email")
 		}
 		if err := checkmail.ValidateFormat(u.Email); err != nil {
 			return errors.New("Invalid Email")
@@ -93,7 +95,6 @@ func (u *User) Validate(action string) error {
 }
 
 func (u *User) SaveUser(db *gorm.DB) (*User, error) {
-
 	var err error
 	err = db.Debug().Create(&u).Error
 	if err != nil {
@@ -119,7 +120,46 @@ func (u *User) FindUserByID(db *gorm.DB, uid uint32) (*User, error) {
 		return &User{}, err
 	}
 	if gorm.IsRecordNotFoundError(err) {
+		return &User{}, errors.New("user Not Found")
+	}
+	return u, err
+}
+
+func (u *User) EmailExists(db *gorm.DB,email string) bool{
+	var err error
+	err = db.Debug().Model(User{}).Where("email = ?", email).Take(&u).Error
+	if err != nil{
+		return false
+	}
+	return true
+}
+
+func (u *User) UserExists(db *gorm.DB,nickname string) bool{
+	var err error
+	err = db.Debug().Model(User{}).Where("nickname = ?", nickname).Take(&u).Error
+	if err != nil{
+		return false
+	}
+	return true
+}
+
+func (u *User) FindUserByEmail(db *gorm.DB, email string) (*User, error) {
+	var err error
+	err = db.Debug().Model(User{}).Where("email = ?", email).Take(&u).Error
+	if err != nil {
+		return &User{}, err
+	}
+	if gorm.IsRecordNotFoundError(err) {
 		return &User{}, errors.New("User Not Found")
+	}
+	db = db.Debug().Model(&User{}).Where("email = ?", email).Take(&User{}).UpdateColumns(
+		map[string]interface{}{
+			"is_active":  true,
+			"update_at": time.Now(),
+		},
+	)
+	if db.Error != nil {
+		return &User{}, db.Error
 	}
 	return u, err
 }

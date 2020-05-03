@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"crypto/rand"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -10,6 +11,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
@@ -30,11 +32,46 @@ func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
 		responses.ERROR(w, http.StatusUnprocessableEntity, err)
 		return
 	}
+	emailCheck := user.EmailExists(server.DB,user.Email)
+	if emailCheck == true {
+		responses.ERROR(w, http.StatusUnprocessableEntity, errors.New("email already exists"))
+		return
+	}
+	nickName := user.UserExists(server.DB,user.Nickname)
+	if nickName == true {
+		responses.ERROR(w, http.StatusUnprocessableEntity, errors.New("nickname already exists"))
+		return
+	}
 	userCreated, err := user.SaveUser(server.DB)
 
 	if err != nil {
 
 		responses.ERROR(w, http.StatusInternalServerError, errors.New("format error"))
+		return
+	}
+	//verification key generate and send in email and store in redis Service
+	verification_key := make([]byte, 14)
+	_, err = rand.Read(verification_key)
+	if err != nil {
+		return
+	}
+	//email_send := sendgrid.SendGrid{
+	//	Subject:          "Account verification",
+	//	FromEmail:        "info@conferencetracker.com",
+	//	FromName:         "Admin",
+	//	ToEmail:          userCreated.Email,
+	//	ToName:           userCreated.Nickname,
+	//	PlainTextContent: "",
+	//	HtmlContent:      string(verification_key),
+	//}
+	//_, _ = email_send.EmailSend()
+	//redis write the secret key
+	key1 := string(verification_key)
+	fmt.Println(key1)
+	value1 := &RedisValue{Name: userCreated.Nickname, Email: userCreated.Email}
+	err = server.setKey(key1, value1, time.Minute*1)
+	if err != nil {
+		responses.ERROR(w, http.StatusBadRequest, err)
 		return
 	}
 	w.Header().Set("Location", fmt.Sprintf("%s%s/%d", r.Host, r.RequestURI, userCreated.ID))
@@ -68,4 +105,30 @@ func (server *Server) GetUser(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	responses.JSON(w, http.StatusOK, userGotten)
+}
+
+func (server *Server) Verification(w http.ResponseWriter, r *http.Request){
+	vars := mux.Vars(r)
+	key1 := vars["key"]
+	key1 = "sampleKey"
+	//value1 := &RedisValue{Name: "someName", Email: "someemail@abc.com"}
+	//err := server.setKey(key1, value1, time.Minute*1)
+	//if err != nil {
+	//	log.Fatalf("Error: %v", err.Error())
+	//}
+	value2 := &RedisValue{}
+	err := server.getKey(key1, value2)
+
+	if err != nil {
+		responses.ERROR(w, http.StatusBadRequest, err)
+		return
+	}
+	//email := ""
+	//user := models.User{}
+	//userGotten, err := user.FindUserByEmail(server.DB, email)
+	//if err != nil {
+	//	responses.ERROR(w, http.StatusBadRequest, err)
+	//	return
+	//}
+	responses.JSON(w, http.StatusOK, value2)
 }

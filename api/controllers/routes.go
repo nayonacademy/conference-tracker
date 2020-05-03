@@ -26,5 +26,6 @@ func (server *Server) InitializeRoutes(){
 	server.Router.HandleFunc("/conferences/{id}", middlewares.SetMiddlewareJSON(server.GetConference)).Methods("GET")
 	server.Router.HandleFunc("/conferences/{id}", middlewares.SetMiddlewareJSON(server.UpdateConference)).Methods("PUT")
 	server.Router.HandleFunc("/conferences/{id}", middlewares.SetMiddlewareJSON(server.DeleteConference)).Methods("DELETE")
-
+	// verification
+	server.Router.HandleFunc("/verification/{key}", middlewares.SetMiddlewareJSON(server.Verification)).Methods("GET")
 }
