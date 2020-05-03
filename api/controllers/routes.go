@@ -28,4 +28,6 @@ func (server *Server) InitializeRoutes(){
 	server.Router.HandleFunc("/conferences/{id}", middlewares.SetMiddlewareJSON(server.DeleteConference)).Methods("DELETE")
 	// verification
 	server.Router.HandleFunc("/verification/{key}", middlewares.SetMiddlewareJSON(server.Verification)).Methods("GET")
+	// send grid email send test
+	server.Router.HandleFunc("/email", middlewares.SetMiddlewareJSON(server.EmailSend)).Methods("POST")
 }
