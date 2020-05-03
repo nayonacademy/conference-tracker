@@ -8,8 +8,14 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/nayonacademy/conferenceTracker/api/models"
 	"github.com/nayonacademy/conferenceTracker/api/responses"
+	"github.com/sendgrid/sendgrid-go"
+	"github.com/sendgrid/sendgrid-go/helpers/mail"
+	"log"
+
 	"io/ioutil"
+
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 )
@@ -131,4 +137,26 @@ func (server *Server) Verification(w http.ResponseWriter, r *http.Request){
 	//	return
 	//}
 	responses.JSON(w, http.StatusOK, value2)
+}
+
+func (server *Server) EmailSend(w http.ResponseWriter, r *http.Request){
+	//myKey := make([]byte, 14)
+	from := mail.NewEmail("Example User", "test@example.com")
+	subject := "Sending with SendGrid is Fun"
+	to := mail.NewEmail("Example User", "si.nayon@gmail.com")
+	plainTextContent := "and easy to do anywhere, even with Go"
+	htmlContent := "<strong>and easy to do anywhere, even with Go</strong>"
+	message := mail.NewSingleEmail(from, subject, to, plainTextContent, htmlContent)
+	client := sendgrid.NewSendClient(os.Getenv("SENDGRID_API_KEY"))
+	fmt.Println("api_key", os.Getenv("SENDGRID_API_KEY"))
+	response, err := client.Send(message)
+	if err != nil {
+		log.Println(err)
+	} else {
+		fmt.Println(response.StatusCode)
+		fmt.Println(response.Body)
+		fmt.Println(response.Headers)
+	}
+	fmt.Println(os.Getenv("SENDGRID_API_KEY"))
+	responses.JSON(w, http.StatusOK,  "Email send successfully")
 }
