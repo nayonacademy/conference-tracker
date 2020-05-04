@@ -199,3 +199,7 @@ func (u *User) DeleteAUser(db *gorm.DB, uid uint32) (int64, error) {
 	}
 	return db.RowsAffected, nil
 }
+
+func (u *User) EmailVerification() {
+
+}
