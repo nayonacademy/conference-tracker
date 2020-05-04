@@ -30,4 +30,6 @@ func (server *Server) InitializeRoutes(){
 	server.Router.HandleFunc("/verification/{key}", middlewares.SetMiddlewareJSON(server.Verification)).Methods("GET")
 	// send grid email send test
 	server.Router.HandleFunc("/email", middlewares.SetMiddlewareJSON(server.EmailSend)).Methods("POST")
+	// All test and RND things
+	server.Router.HandleFunc("/mytest", middlewares.SetMiddlewareJSON(server.MyTest)).Methods("GET")
 }

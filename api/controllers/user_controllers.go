@@ -72,9 +72,9 @@ func (server *Server) CreateUser(w http.ResponseWriter, r *http.Request) {
 	//}
 	//_, _ = email_send.EmailSend()
 	//redis write the secret key
-	key1 := string(verification_key)
+	key1 := "someOne"
 	fmt.Println(key1)
-	value1 := &RedisValue{Name: userCreated.Nickname, Email: userCreated.Email}
+	value1 := &RedisValue{Name: string(verification_key), Email: userCreated.Email}
 	err = server.setKey(key1, value1, time.Minute*1)
 	if err != nil {
 		responses.ERROR(w, http.StatusBadRequest, err)
@@ -116,7 +116,7 @@ func (server *Server) GetUser(w http.ResponseWriter, r *http.Request) {
 func (server *Server) Verification(w http.ResponseWriter, r *http.Request){
 	vars := mux.Vars(r)
 	key1 := vars["key"]
-	key1 = "sampleKey"
+	//key1 = "sampleKey"
 	//value1 := &RedisValue{Name: "someName", Email: "someemail@abc.com"}
 	//err := server.setKey(key1, value1, time.Minute*1)
 	//if err != nil {
