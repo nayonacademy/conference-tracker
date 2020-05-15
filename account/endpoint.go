@@ -12,9 +12,9 @@ type Endpoints struct {
 }
 func MakeEndpoints(s Service) Endpoints{
 	return Endpoints{
-		CreateUser: nil,
-		GetUser:    nil,
-		Login:      nil,
+		CreateUser: makeCreateUserEndpoints(s),
+		GetUser:    makeGetUserEndpoint(s),
+		Login:      makeLoginEndpoint(s),
 	}
 }
 
