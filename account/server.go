@@ -15,7 +15,7 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
 		decodeUserReq,
 		encodeResponse,
 		))
-	r.Methods("GET").Path("/user/{id}").Handler(httptransport.NewServer(
+	r.Methods("GET").Path("/user/{email}").Handler(httptransport.NewServer(
 		endpoints.GetUser,
 		decodeIdReq,
 		encodeResponse,

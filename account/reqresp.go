@@ -3,6 +3,7 @@ package account
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"net/http"
 )
@@ -45,15 +46,17 @@ func decodeUserReq(ctx context.Context, r *http.Request) (interface{}, error) {
 func decodeIdReq(ctx context.Context, r *http.Request)(interface{}, error){
 	var req GetUserRequest
 	vars := mux.Vars(r)
+	fmt.Println("Vars", vars)
+	fmt.Println(r.Body)
 	req = GetUserRequest{Email:vars["email"]}
 	return req, nil
 }
 func decodeTokenReq(ctx context.Context, r *http.Request)(interface{}, error){
 	var req LoginRequest
-	vars := mux.Vars(r)
-	req = LoginRequest{
-		Email:    vars["email"],
-		Password: vars["password"],
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
 	}
+	fmt.Println("reqresp : step 1",req)
 	return req, nil
 }

@@ -2,6 +2,7 @@ package account
 
 import (
 	"context"
+	"fmt"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	"github.com/gofrs/uuid"
@@ -43,6 +44,7 @@ func (s service) GetUser(ctx context.Context, email string) (string, error) {
 
 func (s service) Login(ctx context.Context, email string, password string) (string, error) {
 	logger := log.With(s.logger,"method","Login")
+	fmt.Println("logic: step 2", email, password)
 	token, err := s.repostory.Login(ctx, email, password)
 	if err != nil{
 		level.Error(logger).Log("err",err)

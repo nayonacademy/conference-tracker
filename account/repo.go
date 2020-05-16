@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/go-kit/kit/log"
 	"time"
@@ -39,6 +40,7 @@ func (r *repo) GetUser(ctx context.Context, email string) (string, error) {
 }
 
 func (r *repo) Login(ctx context.Context, email string, password string) (string, error) {
+	fmt.Println("repo: step 3", email, password)
 	var id string
 	err := r.db.QueryRow("SELECT id FROM users WHERE email=$1 and password=$2",email,password).Scan(&id)
 	if err != nil{
