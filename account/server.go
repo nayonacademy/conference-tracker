@@ -10,12 +10,8 @@ import (
 )
 
 func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
-	key := []byte("secret")
-	keys := func(token *jwt.Token) (interface{}, error) {
-		return key, nil
-	}
-	jwtOptions := []httptransport.ServerOption{
-		httptransport.ServerBefore(gokitjwt.HTTPToContext()),
+	options := []httptransport.ServerOption{
+		httptransport.ServerErrorEncoder(httptransport.DefaultErrorEncoder),
 	}
 
 	r := mux.NewRouter()
@@ -26,16 +22,16 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
 		encodeResponse,
 		))
 	r.Methods("GET").Path("/user/{email}").Handler(httptransport.NewServer(
-		gokitjwt.NewParser(keys, jwt.SigningMethodHS256, gokitjwt.MapClaimsFactory)(endpoints.GetUser),
+		gokitjwt.NewParser(jwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.GetUser),
 		decodeIdReq,
 		encodeResponse,
-		jwtOptions...,
+		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 		))
 	r.Methods("POST").Path("/users").Handler(httptransport.NewServer(
-		gokitjwt.NewParser(keys, jwt.SigningMethodHS256, gokitjwt.MapClaimsFactory)(endpoints.GetUser),
+		gokitjwt.NewParser(jwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.GetUser),
 		decodeIdReq,
 		encodeResponse,
-		jwtOptions...,
+		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 	))
 	r.Methods("POST").Path("/login").Handler(httptransport.NewServer(
 		endpoints.Login,
