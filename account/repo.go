@@ -5,9 +5,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/go-kit/kit/log"
-	"time"
 )
 
 var RepoErr = errors.New("unable to handle repo request")
@@ -46,16 +44,11 @@ func (r *repo) Login(ctx context.Context, email string, password string) (string
 	if err != nil{
 		return "", RepoErr
 	}
-	token := jwt.New(jwt.SigningMethodHS256)
-	claims := token.Claims.(jwt.MapClaims)
-	claims["id"] = id
-	claims["admin"] = true
-	claims["exp"] = time.Now().Add(time.Hour * 72).Unix()
-	t, err := token.SignedString([]byte("secret"))
+	token, err := Sign(email, password)
 	if err != nil{
 		return "", RepoErr
 	}
-	return t, nil
+	return token, nil
 }
 
 func NewRepo(db *sql.DB, logger log.Logger) Repository{
