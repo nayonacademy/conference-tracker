@@ -1,10 +1,10 @@
 package account
 
 import (
-	"context"
-	"fmt"
-	"github.com/go-kit/kit/metrics"
-	"time"
+"context"
+"fmt"
+"github.com/go-kit/kit/metrics"
+"time"
 )
 
 type instrumentingMiddleware struct {

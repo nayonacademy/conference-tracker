@@ -13,6 +13,8 @@ import (
 	"os/signal"
 	"syscall"
 	_ "github.com/mattn/go-sqlite3"
+	stdprometheus "github.com/prometheus/client_golang/prometheus"
+	kitprometheus "github.com/go-kit/kit/metrics/prometheus"
 )
 
 func main(){
@@ -25,6 +27,26 @@ func main(){
 			"service", "account",
 			"time",log.DefaultTimestampUTC,"caller",log.DefaultCaller,)
 	}
+	// prometheus implement
+	fieldKeys := []string{"method","error"}
+	requestCount := kitprometheus.NewCounterFrom(stdprometheus.CounterOpts{
+		Namespace:"my_group",
+		Subsystem: "string_service",
+		Name:"request_count",
+		Help:"Number of requests received",
+	},fieldKeys)
+	requestLatency := kitprometheus.NewSummaryFrom(stdprometheus.SummaryOpts{
+		Namespace:   "my_group",
+		Subsystem:   "string_service",
+		Name:        "request_latency_microseconds",
+		Help:        "Total duration of requests in microseconds",
+	}, fieldKeys)
+	countResult := kitprometheus.NewSummaryFrom(stdprometheus.SummaryOpts{
+		Namespace:   "my_group",
+		Subsystem:   "string_service",
+		Name:        "count_result",
+		Help:        "The result of each count method",
+	}, []string{})
 	level.Info(logger).Log("msg","service started")
 	defer level.Info(logger).Log("msg","service ended")
 
@@ -43,10 +65,13 @@ func main(){
 	flag.Parse()
 	ctx := context.Background()
 	var srv account.Service
+	//srv = account.instrumentingMiddleware{logger, svc}
+	//srv = account.instrumentingMiddleware{requestCount, requestLatency, countResult, srv}
 	{
 		repository := account.NewRepo(db, logger)
 		srv = account.NewService(repository, logger)
 	}
+
 	errs := make(chan error)
 
 	go func() {
