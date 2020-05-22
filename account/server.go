@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/gorilla/mux"
-	"net/http"
 	gokitjwt "github.com/go-kit/kit/auth/jwt"
 	httptransport "github.com/go-kit/kit/transport/http"
+	"github.com/gorilla/mux"
+	"net/http"
 )
 
 func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
@@ -16,7 +16,7 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
 	}
 
 	r := mux.NewRouter()
-	r.Use(commonMiddleware)
+	r.Use(CORS)
 	r.Methods("POST").Path("/user").Handler(httptransport.NewServer(
 		endpoints.CreateUser,
 		decodeUserReq,
@@ -39,14 +39,15 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
 		decodeTokenReq,
 		encodeResponse,
 		))
+	//return handlers.CORS()(r)
 	return r
 }
 
 func commonMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Access-Control-Allow-Headers:", "*")
-		w.Header().Set("Access-Control-Allow-Origin", "*")
-		w.Header().Set("Access-Control-Allow-Methods", "*")
+		//w.Header().Set("Access-Control-Allow-Headers:", "*")
+		//w.Header().Set("Access-Control-Allow-Origin", "*")
+		//w.Header().Set("Access-Control-Allow-Methods", "*")
 		w.Header().Add("Content-Type", "application/json")
 		next.ServeHTTP(w, r)
 	})
