@@ -8,6 +8,7 @@ require (
 	github.com/gofrs/uuid v3.3.0+incompatible
 	github.com/gorilla/handlers v1.4.2
 	github.com/gorilla/mux v1.7.4
-	github.com/mattn/go-sqlite3 v2.0.3+incompatible // indirect
+	github.com/martini-contrib/cors v0.0.0-20141016003011-553b9208d353 // indirect
+	github.com/mattn/go-sqlite3 v2.0.3+incompatible
 	github.com/prometheus/client_golang v1.6.0 // indirect
 )

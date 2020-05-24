@@ -55,11 +55,11 @@ func commonMiddleware(next http.Handler) http.Handler {
 
 func CORS(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-
 		// Set headers
-		w.Header().Set("Access-Control-Allow-Headers:", "*")
+		w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 		w.Header().Set("Access-Control-Allow-Origin", "*")
 		w.Header().Set("Access-Control-Allow-Methods", "*")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 
 		if r.Method == "OPTIONS" {
 			w.WriteHeader(http.StatusOK)
@@ -67,7 +67,6 @@ func CORS(next http.Handler) http.Handler {
 		}
 
 		fmt.Println("ok")
-
 		// Next
 		next.ServeHTTP(w, r)
 		return
