@@ -23,9 +23,7 @@ func jwtKeyFunc(token *jwt.Token) (interface{}, error) {
 
 // Sign
 func Sign(name, uid string) (string, error) {
-
 	expAt := time.Now().Add(time.Duration(60) * time.Minute).Unix()
-
 	claims := ArithmeticCustomClaims{
 		UserId: uid,
 		Name:   name,
@@ -34,8 +32,6 @@ func Sign(name, uid string) (string, error) {
 			Issuer:    "system",
 		},
 	}
-
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-
 	return token.SignedString(secretKey)
 }

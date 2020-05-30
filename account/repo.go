@@ -15,10 +15,11 @@ type repo struct {
 }
 
 func (r *repo) CreateUser(ctx context.Context, user User) error {
-	if user.Email == "" || user.Password == ""{
-		return RepoErr
-	}
-	err := r.db.Create(&User{Email: user.Email, Password: user.Password})
+	var usr User
+	err := r.db.First(&user, "email = ?", user.Email).Scan(&usr).Error
+
+	// Create
+	err = r.db.Create(&User{Email: user.Email, Password: user.Password}).Error
 	if err != nil{
 		return RepoErr
 	}
@@ -37,16 +38,16 @@ func (r *repo) GetUser(ctx context.Context, email string) (string, error) {
 
 func (r *repo) Login(ctx context.Context, email string, password string) (string, error) {
 	var user User
-	//var token string
-	err := r.db.First(&user, "email=? and password=?", email, password)
+	var token string
+	err := r.db.Where("email = ? and password = ?", email, password).Find(&user).Error
 	if err != nil{
 		return "", RepoErr
 	}
-	//token, err = Sign(email, password)
-	//if err != nil{
-	//	return "", RepoErr
-	//}
-	return "user", nil
+	token , errs := Sign(email, password)
+	if errs != nil{
+		return "", RepoErr
+	}
+	return token, nil
 }
 
 func NewRepo(db *gorm.DB, logger log.Logger) Repository{

@@ -2,10 +2,8 @@ package account
 
 import (
 	"context"
-	"fmt"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
-	"github.com/gofrs/uuid"
 )
 
 type service struct {
@@ -15,9 +13,6 @@ type service struct {
 
 func (s service) CreateUser(ctx context.Context, email string, password string) (string, error) {
 	logger := log.With(s.logger,"method","CreateUser")
-
-	uuid, _ := uuid.NewV4()
-	id := uuid.String()
 	user := User{
 		Email:    email,
 		Password: password,
@@ -26,7 +21,7 @@ func (s service) CreateUser(ctx context.Context, email string, password string) 
 		level.Error(logger).Log("err", err)
 		return "", err
 	}
-	logger.Log("create user", id)
+	logger.Log("create user", user.Email)
 	return "success", nil
 }
 
@@ -43,7 +38,6 @@ func (s service) GetUser(ctx context.Context, email string) (string, error) {
 
 func (s service) Login(ctx context.Context, email string, password string) (string, error) {
 	logger := log.With(s.logger,"method","Login")
-	fmt.Println("logic: step 2", email, password)
 	token, err := s.repostory.Login(ctx, email, password)
 	if err != nil{
 		level.Error(logger).Log("err",err)
