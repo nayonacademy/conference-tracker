@@ -1,9 +1,12 @@
 package account
 
-import "context"
+import (
+	"context"
+	"github.com/jinzhu/gorm"
+)
 
 type User struct {
-	ID       string `json:"id,omitempty"`
+	gorm.Model
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }

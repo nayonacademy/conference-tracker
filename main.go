@@ -2,11 +2,11 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"flag"
 	"fmt"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
+	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/nayonacademy/conference-tracker/account"
 	"net/http"
@@ -48,18 +48,17 @@ func main(){
 	level.Info(logger).Log("msg","service started")
 	defer level.Info(logger).Log("msg","service ended")
 
-	var db *sql.DB
-	{
-		var err error
-		db, err = sql.Open("sqlite3","./nraboy.db")
 
-		if err != nil{
-			level.Error(logger).Log("exit", err)
-			os.Exit(-1)
-		}
-		statement, _ := db.Prepare("CREATE TABLE IF NOT EXISTS users (id TEXT PRIMARY KEY, email TEXT, password TEXT)")
-		statement.Exec()
+	var err error
+	db, err := gorm.Open("sqlite3", "test.db")
+	if err != nil {
+		panic("failed to connect database")
+		level.Error(logger).Log("exit", err)
+		os.Exit(-1)
 	}
+	defer db.Close()
+	db.AutoMigrate(&account.User{})
+
 	flag.Parse()
 	ctx := context.Background()
 	var srv account.Service

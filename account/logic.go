@@ -19,7 +19,6 @@ func (s service) CreateUser(ctx context.Context, email string, password string) 
 	uuid, _ := uuid.NewV4()
 	id := uuid.String()
 	user := User{
-		ID:       id,
 		Email:    email,
 		Password: password,
 	}
