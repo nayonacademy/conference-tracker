@@ -17,7 +17,7 @@ type ArithmeticCustomClaims struct {
 }
 
 // jwtKeyFunc
-func jwtKeyFunc(token *jwt.Token) (interface{}, error) {
+func JwtKeyFunc(token *jwt.Token) (interface{}, error) {
 	return secretKey, nil
 }
 

@@ -9,6 +9,7 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/nayonacademy/conference-tracker/account"
+	"github.com/nayonacademy/conference-tracker/category"
 	"net/http"
 	"os"
 	"os/signal"
@@ -57,16 +58,19 @@ func main(){
 		os.Exit(-1)
 	}
 	defer db.Close()
-	db.AutoMigrate(&account.User{})
+	db.AutoMigrate(&account.User{}, &category.Category{})
 
 	flag.Parse()
 	ctx := context.Background()
 	var srv account.Service
+	var srv_cat category.Service
 	//srv = account.instrumentingMiddleware{logger, svc}
 	//srv = account.instrumentingMiddleware{requestCount, requestLatency, countResult, srv}
 	{
 		repository := account.NewRepo(db, logger)
+		cat_repo := category.NewRepo(db, logger)
 		srv = account.NewService(repository, logger)
+		srv_cat = category.NewService(cat_repo,logger)
 	}
 
 	errs := make(chan error)
@@ -77,9 +81,11 @@ func main(){
 		errs <- fmt.Errorf("%s", <-c)
 	}()
 	endpoints := account.MakeEndpoints(srv)
+	cat_endpoints := category.MakeEndpoints(srv_cat)
 	go func() {
 		fmt.Println("listening on port", *httpAddr)
 		handler := account.NewHTTPServer(ctx, endpoints)
+		handler = category.NewHTTPServer(ctx, cat_endpoints)
 		errs <- http.ListenAndServe(*httpAddr, handler)
 	}()
 	level.Error(logger).Log("exit",<-errs)
