@@ -17,7 +17,9 @@ type repo struct {
 func (r *repo) CreateUser(ctx context.Context, user User) error {
 	var usr User
 	err := r.db.First(&user, "email = ?", user.Email).Scan(&usr).Error
-
+	if usr.Email == user.Email{
+		return errors.New("user already exists")
+	}
 	// Create
 	err = r.db.Create(&User{Email: user.Email, Password: user.Password}).Error
 	if err != nil{
