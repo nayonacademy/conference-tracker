@@ -19,7 +19,8 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
 	r := mux.NewRouter()
 	r.Use(CORS)
 	r.Methods("POST").Path("/category").Handler(httptransport.NewServer(
-		gokitjwt.NewParser(account.JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateCategory),
+		//gokitjwt.NewParser(account.JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateCategory),
+		endpoints.CreateCategory,
 		decodeCategoryReq,
 		encodeResponse,
 		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
