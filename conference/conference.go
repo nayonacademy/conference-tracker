@@ -72,3 +72,29 @@ type Speaker struct {
 	Name string `gorm:"size:255; not null" json:"name"`
 	Position string `gorm:"size:255; not null" json:"position"`
 }
+
+type Repository interface {
+	CreateConfOwnProfile()
+	UpdateConfOwnProfile()
+	DeleteConfOwnProfile()
+
+	CreateConference()
+	UpdateCreateConference()
+	DeleteCreateConference()
+
+	CreateLocation()
+	UpdateCreateLocation()
+	DeleteCreateLocation()
+
+	CreateRating()
+	UpdateCreateRating()
+	DeleteCreateRating()
+
+	CreateReport()
+	UpdateCreateReport()
+	DeleteCreateReport()
+
+	CreateSpeaker()
+	UpdateCreateSpeaker()
+	DeleteCreateSpeaker()
+}
