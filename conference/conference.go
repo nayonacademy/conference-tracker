@@ -7,12 +7,12 @@ import (
 
 type ConfOwnProfile struct {
 	gorm.Model
-	Reviews int16
-	Reads int16
-	Useful int16
-	Attend int16
-	Favourite string
-	Picture string
+	Reviews int16	`json:"reviews"`
+	Reads int16	`json:"reads"`
+	Useful int16 `json:"useful"`
+	Attend int16	`json:"attend"`
+	Favourite string	`json:"favourite"`
+	Picture string	`json:"picture"`
 }
 
 type Conference struct {
@@ -36,9 +36,9 @@ type Conference struct {
 
 type Location struct {
 	gorm.Model
-	Name string
-	Date time.Month
-	Time time.Time
+	Name string	`json:"name"`
+	Date time.Month	`json:"date"`
+	Time time.Time	`json:"time"`
 }
 
 type Rating struct {
@@ -61,10 +61,10 @@ type Rating struct {
 }
 type Report struct {
 	gorm.Model
-	Offensive bool
-	Violence bool
-	Spam bool
-	InAppropriate bool
+	Offensive bool	`json:"offensive"`
+	Violence bool	`json:"violence"`
+	Spam bool	`json:"spam"`
+	InAppropriate bool	`json:"in_appropriate"`
 }
 
 type Speaker struct {

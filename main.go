@@ -10,6 +10,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/nayonacademy/conference-tracker/account"
 	"github.com/nayonacademy/conference-tracker/category"
+	"github.com/nayonacademy/conference-tracker/conference"
 	"net/http"
 	"os"
 	"os/signal"
@@ -58,7 +59,7 @@ func main(){
 		os.Exit(-1)
 	}
 	defer db.Close()
-	db.AutoMigrate(&account.User{}, &category.Category{})
+	db.AutoMigrate(&account.User{}, &category.Category{},&conference.ConfOwnProfile{},&conference.Rating{},&conference.Conference{},&conference.Location{},&conference.Report{},&conference.Speaker{})
 
 	flag.Parse()
 	ctx := context.Background()
