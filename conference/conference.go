@@ -81,7 +81,7 @@ type Repository interface {
 	UpdateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile)(interface{}, error)
 	DeleteConfOwnProfile(ctx context.Context, id string)(string, error)
 
-	CreateConference(ctx context.Context, conference Conference) error
+	CreateConference(ctx context.Context, conference Conference) (string, error)
 	GetConference(ctx context.Context, id string)(interface{}, error)
 	UpdateCreateConference(ctx context.Context, confprofile ConfOwnProfile)(interface{}, error)
 	DeleteCreateConference(ctx context.Context, id string)(string, error)

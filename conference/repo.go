@@ -199,7 +199,16 @@ func (r repo) GetReport(ctx context.Context, id string) (interface{}, error) {
 }
 
 func (r repo) UpdateCreateReport(ctx context.Context, report Report) (interface{}, error) {
-	panic("implement me")
+	err := r.db.Where("id = ?", report.ID).Find(&report).Update(
+		"offensive", report.Offensive,
+		"violence", report.Violence,
+		"spam",report.Spam,
+		"in_appropriate",report.InAppropriate,
+	).Error
+	if err != nil{
+		return "", RepoErr
+	}
+	return report.ID, nil
 }
 
 func (r repo) DeleteCreateReport(ctx context.Context, id string) (string, error) {
@@ -226,7 +235,14 @@ func (r repo) GetSpeaker(ctx context.Context, id string) (interface{}, error) {
 }
 
 func (r repo) UpdateCreateSpeaker(ctx context.Context, speaker Speaker) (interface{}, error) {
-	panic("implement me")
+	err := r.db.Where("id = ?", speaker.ID).Find(&speaker).Update(
+		"name", speaker.Name,
+		"position", speaker.Position,
+	).Error
+	if err != nil{
+		return "", RepoErr
+	}
+	return speaker.ID, nil
 }
 
 func (r repo) DeleteCreateSpeaker(ctx context.Context, id string) (string, error) {

@@ -64,13 +64,13 @@ func (s service) DeleteConfOwnProfile(ctx context.Context, id string) (string, e
 
 func (s service) CreateConference(ctx context.Context, conference Conference) (string, error) {
 	logger := log.With(s.logger,"method","CreateConference")
-	err := s.repostory.CreateConference(ctx, conference)
+	conf, err := s.repostory.CreateConference(ctx, conference)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
 	}
 	logger.Log("get category")
-	return "conference", nil
+	return conf, nil
 }
 
 func (s service) GetConference(ctx context.Context, id string) (interface{}, error) {
