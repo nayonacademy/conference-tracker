@@ -3,6 +3,7 @@ package conference
 import (
 	"context"
 	"encoding/json"
+	"github.com/gorilla/mux"
 	"net/http"
 	"time"
 )
@@ -235,3 +236,207 @@ type(
 func encodeResponse(ctx context.Context, w http.ResponseWriter, response interface{}) error{
 	return json.NewEncoder(w).Encode(response)
 }
+
+func decodeCreateConfOwnProfileRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req CreateConfOwnProfileRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeGetConfOwnProfileRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req GetConfOwnProfileRequest
+	vars := mux.Vars(r)
+	req = GetConfOwnProfileRequest{Id:vars["id"]}
+	return req, nil
+	}
+
+func decodeUpdateConfOwnProfileRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req UpdateConfOwnProfileRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeDeleteConfOwnProfileRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req DeleteConfOwnProfileRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeCreateConferenceRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req CreateConferenceRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeGetConferenceRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req GetConferenceRequest
+	vars := mux.Vars(r)
+	req = GetConferenceRequest{Id:vars["id"]}
+	return req, nil
+	}
+
+func decodeUpdateCreateConferenceRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req UpdateCreateConferenceRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeDeleteCreateConferenceRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req DeleteCreateConferenceRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeCreateLocationRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req CreateLocationRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeGetLocationRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req GetLocationRequest
+	vars := mux.Vars(r)
+	req = GetLocationRequest{Id:vars["id"]}
+	return req, nil
+	}
+
+func decodeUpdateCreateLocationRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req UpdateCreateLocationRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeDeleteCreateLocationRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req DeleteCreateLocationRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeCreateRatingRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req CreateRatingRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeGetRatingRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req GetRatingRequest
+	vars := mux.Vars(r)
+	req = GetRatingRequest{Id:vars["id"]}
+	return req, nil
+	}
+
+func decodeUpdateCreateRatingRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req UpdateCreateRatingRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeDeleteCreateRatingRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req DeleteCreateRatingRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeCreateReportRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req CreateReportRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeGetReportRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req GetReportRequest
+	vars := mux.Vars(r)
+	req = GetReportRequest{Id:vars["id"]}
+	return req, nil
+	}
+
+func decodeUpdateCreateReportRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req UpdateCreateReportRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeDeleteCreateReportRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req DeleteCreateReportRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeCreateSpeakerRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req CreateSpeakerRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeGetSpeakerRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req GetSpeakerRequest
+	vars := mux.Vars(r)
+	req = GetSpeakerRequest{Id:vars["id"]}
+	return req, nil
+	}
+
+func decodeUpdateCreateSpeakerRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req UpdateCreateSpeakerRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
+
+func decodeDeleteCreateSpeakerRequest(ctx context.Context, r *http.Request)(interface{}, error) {
+	var req DeleteCreateSpeakerRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	}
