@@ -2,7 +2,6 @@ package account
 
 import (
 	"context"
-	"fmt"
 	"github.com/go-kit/kit/endpoint"
 )
 
@@ -40,7 +39,6 @@ func makeLoginEndpoint(s Service) endpoint.Endpoint{
 
 		req := request.(LoginRequest)
 		token, err := s.Login(ctx, req.Email, req.Password)
-		fmt.Println("endppoint: step 4", req, token)
 		return LoginResponse{Token:token}, err
 	}
 }

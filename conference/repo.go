@@ -14,15 +14,15 @@ type repo struct {
 	logger log.Logger
 }
 
-func (r repo) CreateConfOwnProfile(ctx context.Context, reviews int16,reads int16,useful int16,attend int16,favourite string,picture string) (string, error) {
+func (r repo) CreateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile) (string, error) {
 	//Create
 	err := r.db.Create(&ConfOwnProfile{
-		Reviews:   reviews,
-		Reads:     reads,
-		Useful:    useful,
-		Attend:    attend,
-		Favourite: favourite,
-		Picture:   picture,
+		Reviews:   confprofile.Reviews,
+		Reads:     confprofile.Reads,
+		Useful:    confprofile.Useful,
+		Attend:    confprofile.Attend,
+		Favourite: confprofile.Favourite,
+		Picture:   confprofile.Picture,
 	}).Error
 	if err != nil{
 		return "",RepoErr

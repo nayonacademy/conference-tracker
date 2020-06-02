@@ -76,7 +76,7 @@ type Speaker struct {
 }
 
 type Repository interface {
-	CreateConfOwnProfile(ctx context.Context, reviews int16,reads int16,useful int16,attend int16,favourite string,picture string) (string, error)
+	CreateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile) (string, error)
 	GetConfOwnProfile(ctx context.Context, id string)(interface{}, error)
 	UpdateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile)(interface{}, error)
 	DeleteConfOwnProfile(ctx context.Context, id string)(string, error)

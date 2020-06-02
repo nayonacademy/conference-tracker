@@ -21,7 +21,7 @@ func (s service) CreateConfOwnProfile(ctx context.Context, reviews int16,reads i
 		Favourite: favourite,
 		Picture:   picture,
 	}
-	if _,err := s.repostory.CreateConfOwnProfile(ctx, conf_profile); err != nil{
+	if _,err := s.repostory.CreateConfOwnProfile(ctx,conf_profile); err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
 	}
