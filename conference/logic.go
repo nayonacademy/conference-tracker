@@ -11,15 +11,15 @@ type service struct {
 	logger log.Logger
 }
 
-func (s service) CreateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile)(string, error) {
+func (s service) CreateConfOwnProfile(ctx context.Context, reviews int16,reads int16,useful int16,attend int16,favourite string,picture string)(string, error) {
 	logger := log.With(s.logger,"method","CreateConfOwnProfile")
 	conf_profile := ConfOwnProfile{
-		Reviews:   confprofile.Reviews,
-		Reads:     confprofile.Reads,
-		Useful:    confprofile.Useful,
-		Attend:    confprofile.Attend,
-		Favourite: confprofile.Favourite,
-		Picture:   confprofile.Picture,
+		Reviews:   reviews,
+		Reads:     reads,
+		Useful:    useful,
+		Attend:    attend,
+		Favourite: favourite,
+		Picture:   picture,
 	}
 	if _,err := s.repostory.CreateConfOwnProfile(ctx, conf_profile); err != nil{
 		level.Error(logger).Log("err",err)

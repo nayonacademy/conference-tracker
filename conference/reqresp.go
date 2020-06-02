@@ -24,7 +24,7 @@ type(
 		Id string	`json:"id"`
 	}
 	GetConfOwnProfileResponse struct {
-		ConfOwnProfile *ConfOwnProfile `json:"conf_own_profile,omitempty"`
+		ConfOwnProfile interface{} `json:"conf_own_profile,omitempty"`
 	}
 	UpdateConfOwnProfileRequest struct {
 		Reviews int16	`json:"reviews"`
@@ -67,7 +67,7 @@ type(
 		Id string	`json:"id"`
 	}
 	GetConferenceResponse struct {
-		Conference Conference	`json:"conference"`
+		Conference interface{}	`json:"conference"`
 	}
 	UpdateCreateConferenceRequest struct {
 		Name string `json:"name"`
@@ -107,7 +107,7 @@ type(
 		Id string	`json:"id"`
 	}
 	GetLocationResponse struct {
-		Location Location `json:"location"`
+		Location interface{} `json:"location"`
 	}
 	UpdateCreateLocationRequest struct {
 		Name string	`json:"name"`
@@ -147,7 +147,7 @@ type(
 		Id string	`json:"id"`
 	}
 	GetRatingResponse struct {
-		Rating Rating `json:"rating"`
+		Rating interface{} `json:"rating"`
 	}
 	UpdateCreateRatingRequest struct {
 		Rate int16 `json:"rate"`
@@ -188,7 +188,7 @@ type(
 		Id string	`json:"id"`
 	}
 	GetReportResponse struct {
-		Report Report `json:"report"`
+		Report interface{} `json:"report"`
 	}
 	UpdateCreateReportRequest struct {
 		Offensive bool	`json:"offensive"`
@@ -216,7 +216,7 @@ type(
 		Id string	`json:"id"`
 	}
 	GetSpeakerResponse struct {
-		Speaker Speaker `json:"speaker"`
+		Speaker interface{} `json:"speaker"`
 	}
 	UpdateCreateSpeakerRequest struct {
 		Name string `json:"name"`
