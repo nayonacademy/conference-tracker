@@ -21,7 +21,7 @@ func (s service) CreateConfOwnProfile(ctx context.Context, confprofile ConfOwnPr
 		Favourite: confprofile.Favourite,
 		Picture:   confprofile.Picture,
 	}
-	if err := s.repostory.CreateConfOwnProfile(ctx, conf_profile); err != nil{
+	if _,err := s.repostory.CreateConfOwnProfile(ctx, conf_profile); err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
 	}
@@ -84,9 +84,9 @@ func (s service) GetConference(ctx context.Context, id string) (interface{}, err
 	return name, nil
 }
 
-func (s service) UpdateCreateConference(ctx context.Context, confprofile ConfOwnProfile) (interface{}, error) {
+func (s service) UpdateCreateConference(ctx context.Context, conference Conference) (interface{}, error) {
 	logger := log.With(s.logger,"method","UpdateCreateConference")
-	name, err := s.repostory.UpdateCreateConference(ctx, confprofile)
+	name, err := s.repostory.UpdateCreateConference(ctx, conference)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
@@ -108,7 +108,7 @@ func (s service) DeleteCreateConference(ctx context.Context, id string) (string,
 
 func (s service) CreateLocation(ctx context.Context, location Location) (string, error) {
 	logger := log.With(s.logger,"method","CreateLocation")
-	err := s.repostory.CreateLocation(ctx, location)
+	_, err := s.repostory.CreateLocation(ctx, location)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
@@ -128,9 +128,9 @@ func (s service) GetLocation(ctx context.Context, id string) (interface{}, error
 	return name, nil
 }
 
-func (s service) UpdateCreateLocation(ctx context.Context, confprofile ConfOwnProfile) (interface{}, error) {
+func (s service) UpdateCreateLocation(ctx context.Context, location Location) (interface{}, error) {
 	logger := log.With(s.logger,"method","UpdateCreateLocation")
-	name, err := s.repostory.UpdateCreateLocation(ctx, confprofile)
+	name, err := s.repostory.UpdateCreateLocation(ctx, location)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
@@ -152,7 +152,7 @@ func (s service) DeleteCreateLocation(ctx context.Context, id string) (string, e
 
 func (s service) CreateRating(ctx context.Context, rating Rating) (string, error) {
 	logger := log.With(s.logger,"method","CreateRating")
-	err := s.repostory.CreateRating(ctx, rating)
+	_, err := s.repostory.CreateRating(ctx, rating)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
@@ -172,9 +172,9 @@ func (s service) GetRating(ctx context.Context, id string) (interface{}, error) 
 	return name, nil
 }
 
-func (s service) UpdateCreateRating(ctx context.Context, confprofile ConfOwnProfile) (interface{}, error) {
+func (s service) UpdateCreateRating(ctx context.Context, rating Rating) (interface{}, error) {
 	logger := log.With(s.logger,"method","UpdateCreateRating")
-	name, err := s.repostory.UpdateCreateRating(ctx, confprofile)
+	name, err := s.repostory.UpdateCreateRating(ctx, rating)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
@@ -196,7 +196,7 @@ func (s service) DeleteCreateRating(ctx context.Context, id string) (string, err
 
 func (s service) CreateReport(ctx context.Context, report Report) (string, error) {
 	logger := log.With(s.logger,"method","CreateReport")
-	err := s.repostory.CreateReport(ctx, report)
+	_, err := s.repostory.CreateReport(ctx, report)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
@@ -216,9 +216,9 @@ func (s service) GetReport(ctx context.Context, id string) (interface{}, error) 
 	return name, nil
 }
 
-func (s service) UpdateCreateReport(ctx context.Context, confprofile ConfOwnProfile) (interface{}, error) {
+func (s service) UpdateCreateReport(ctx context.Context, report Report) (interface{}, error) {
 	logger := log.With(s.logger,"method","UpdateCreateReport")
-	name, err := s.repostory.UpdateCreateReport(ctx, confprofile)
+	name, err := s.repostory.UpdateCreateReport(ctx, report)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
@@ -240,7 +240,7 @@ func (s service) DeleteCreateReport(ctx context.Context, id string) (string, err
 
 func (s service) CreateSpeaker(ctx context.Context, speaker Speaker) (string, error) {
 	logger := log.With(s.logger,"method","CreateSpeaker")
-	err := s.repostory.CreateSpeaker(ctx, speaker)
+	_, err := s.repostory.CreateSpeaker(ctx, speaker)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err
@@ -260,9 +260,9 @@ func (s service) GetSpeaker(ctx context.Context, id string) (interface{}, error)
 	return name, nil
 }
 
-func (s service) UpdateCreateSpeaker(ctx context.Context, confprofile ConfOwnProfile) (interface{}, error) {
+func (s service) UpdateCreateSpeaker(ctx context.Context, speaker Speaker) (interface{}, error) {
 	logger := log.With(s.logger,"method","UpdateCreateSpeaker")
-	name, err := s.repostory.UpdateCreateSpeaker(ctx, confprofile)
+	name, err := s.repostory.UpdateCreateSpeaker(ctx, speaker)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return "", err

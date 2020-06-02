@@ -14,7 +14,7 @@ type repo struct {
 	logger log.Logger
 }
 
-func (r repo) CreateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile) error {
+func (r repo) CreateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile) (string, error) {
 	//Create
 	err := r.db.Create(&ConfOwnProfile{
 		Reviews:   confprofile.Reviews,
@@ -25,9 +25,9 @@ func (r repo) CreateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfi
 		Picture:   confprofile.Picture,
 	}).Error
 	if err != nil{
-		return RepoErr
+		return "",RepoErr
 	}
-	return nil
+	return "success", nil
 }
 
 func (r repo) GetConfOwnProfile(ctx context.Context, id string) (interface{}, error) {
@@ -58,7 +58,27 @@ func (r repo) DeleteConfOwnProfile(ctx context.Context, id string) (string, erro
 }
 
 func (r repo) CreateConference(ctx context.Context, conference Conference) (string, error) {
-	panic("implement me")
+	err := r.db.Create(&Conference{
+		Name:        conference.Name,
+		Website:     conference.Website,
+		About:       conference.About,
+		Phone:       conference.About,
+		Email:       conference.Phone,
+		Address:     conference.Address,
+		City:        conference.City,
+		ZipCode:     conference.ZipCode,
+		Speakers:    conference.Speakers,
+		Facebook:    conference.Facebook,
+		Twitter:     conference.Twitter,
+		Instagram:   conference.Instagram,
+		OrganizerID: conference.OrganizerID,
+		Locations:   conference.Locations,
+		Rating:      conference.Rating,
+	}).Error
+	if err != nil{
+		return "", RepoErr
+	}
+	return "success", nil
 }
 
 func (r repo) GetConference(ctx context.Context, id string) (interface{}, error) {
@@ -104,7 +124,15 @@ func (r repo) DeleteCreateConference(ctx context.Context, id string) (string, er
 }
 
 func (r repo) CreateLocation(ctx context.Context, location Location) (string, error) {
-	panic("implement me")
+	err := r.db.Create(&Location{
+		Name:  location.Name,
+		Date:  location.Date,
+		Time:  location.Time,
+	}).Error
+	if err != nil{
+		return "", RepoErr
+	}
+	return "success", nil
 }
 
 func (r repo) GetLocation(ctx context.Context, id string) (interface{}, error) {
@@ -138,7 +166,27 @@ func (r repo) DeleteCreateLocation(ctx context.Context, id string) (string, erro
 }
 
 func (r repo) CreateRating(ctx context.Context, rating Rating) (string, error) {
-	panic("implement me")
+	err := r.db.Create(&Rating{
+		Rate:         rating.Rate,
+		Comment:      rating.Comment,
+		Image:        rating.Image,
+		Caption:      rating.Caption,
+		AttendQ:      rating.AttendQ,
+		EnjoyQ:       rating.EnjoyQ,
+		LocationQ:    rating.LocationQ,
+		ConnectPeerQ: rating.ConnectPeerQ,
+		Awesome:      rating.Awesome,
+		Great:        rating.Great,
+		Average:      rating.Average,
+		Poor:         rating.Poor,
+		Terrible:     rating.Terrible,
+		Favorite:     rating.Favorite,
+		Like:         rating.Like,
+	}).Error
+	if err != nil{
+		return "", RepoErr
+	}
+	return "success", nil
 }
 
 func (r repo) GetRating(ctx context.Context, id string) (interface{}, error) {
@@ -185,7 +233,16 @@ func (r repo) DeleteCreateRating(ctx context.Context, id string) (string, error)
 }
 
 func (r repo) CreateReport(ctx context.Context, report Report) (string, error) {
-	panic("implement me")
+	err := r.db.Create(&Report{
+		Offensive:     report.Offensive,
+		Violence:      report.Violence,
+		Spam:          report.Spam,
+		InAppropriate: report.InAppropriate,
+	}).Error
+	if err != nil{
+		return "", RepoErr
+	}
+	return "success", nil
 }
 
 func (r repo) GetReport(ctx context.Context, id string) (interface{}, error) {
@@ -221,7 +278,14 @@ func (r repo) DeleteCreateReport(ctx context.Context, id string) (string, error)
 }
 
 func (r repo) CreateSpeaker(ctx context.Context, speaker Speaker) (string, error) {
-	panic("implement me")
+	err := r.db.Create(&Speaker{
+		Name:     speaker.Name,
+		Position: speaker.Position,
+	}).Error
+	if err != nil{
+		return "", RepoErr
+	}
+	return "success", nil
 }
 
 func (r repo) GetSpeaker(ctx context.Context, id string) (interface{}, error) {
