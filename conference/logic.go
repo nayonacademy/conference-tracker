@@ -41,7 +41,7 @@ func (s service) GetConfOwnProfile(ctx context.Context, id string) (interface{},
 	return name, nil
 }
 
-func (s service) UpdateConfOwnProfile(ctx context.Context, reviews int16,reads int16,useful int16,attend int16,favourite string,picture string) (interface{}, error) {
+func (s service) UpdateConfOwnProfile(ctx context.Context, reviews int16,reads int16,useful int16,attend int16,favourite string,picture string) (string, error) {
 	logger := log.With(s.logger,"method","UpdateConfOwnProfile")
 	conf_profile := ConfOwnProfile{
 		Reviews:   reviews,
@@ -110,7 +110,7 @@ func (s service) GetConference(ctx context.Context, id string) (interface{}, err
 	return name, nil
 }
 
-func (s service) UpdateCreateConference(ctx context.Context, name string,website string, about string,	phone string,email string,address string,city string,zipcode string,speakers []Speaker,	facebook string,twitter string,	instagram string,organizer_id int16, locations []Location, rating Rating) (interface{}, error) {
+func (s service) UpdateCreateConference(ctx context.Context, name string,website string, about string,	phone string,email string,address string,city string,zipcode string,speakers []Speaker,	facebook string,twitter string,	instagram string,organizer_id int16, locations []Location, rating Rating) (string, error) {
 	logger := log.With(s.logger,"method","UpdateCreateConference")
 	conference := Conference{
 		Name:        name,
@@ -176,7 +176,7 @@ func (s service) GetLocation(ctx context.Context, id string) (interface{}, error
 	return name, nil
 }
 
-func (s service) UpdateCreateLocation(ctx context.Context, name string, date time.Month, time time.Time) (interface{}, error) {
+func (s service) UpdateCreateLocation(ctx context.Context, name string, date time.Month, time time.Time) (string, error) {
 	logger := log.With(s.logger,"method","UpdateCreateLocation")
 	location := Location{
 		Name:  name,
@@ -203,12 +203,11 @@ func (s service) DeleteCreateLocation(ctx context.Context, id string) (string, e
 	return name, nil
 }
 
-func (s service) CreateRating(ctx context.Context, rate int16, comment string, image string, caption string, attend_q bool, enjoy_q bool, location_q bool, connectPeer_q bool, awesome int16, great int16, average int16, poor int16, terrible int16, favorite bool, like bool) (string, error) {
+func (s service) CreateRating(ctx context.Context, rate int16, comment string, caption string, attend_q bool, enjoy_q bool, location_q bool, connectPeer_q bool, awesome int16, great int16, average int16, poor int16, terrible int16, favorite bool, like bool) (string, error) {
 	logger := log.With(s.logger,"method","CreateRating")
 	rating := Rating{
 		Rate:         rate,
 		Comment:      comment,
-		Image:        image,
 		Caption:      caption,
 		AttendQ:      attend_q,
 		EnjoyQ:       enjoy_q,
@@ -242,12 +241,11 @@ func (s service) GetRating(ctx context.Context, id string) (interface{}, error) 
 	return name, nil
 }
 
-func (s service) UpdateCreateRating(ctx context.Context, rate int16, comment string, image string, caption string, attend_q bool, enjoy_q bool, location_q bool, connectPeer_q bool, awesome int16, great int16, average int16, poor int16, terrible int16, favorite bool, like bool) (interface{}, error) {
+func (s service) UpdateCreateRating(ctx context.Context, rate int16, comment string, caption string, attend_q bool, enjoy_q bool, location_q bool, connectPeer_q bool, awesome int16, great int16, average int16, poor int16, terrible int16, favorite bool, like bool) (string, error) {
 	logger := log.With(s.logger,"method","UpdateCreateRating")
 	rating := Rating{
 		Rate:         rate,
 		Comment:      comment,
-		Image:        image,
 		Caption:      caption,
 		AttendQ:      attend_q,
 		EnjoyQ:       enjoy_q,
@@ -310,7 +308,7 @@ func (s service) GetReport(ctx context.Context, id string) (interface{}, error) 
 	return name, nil
 }
 
-func (s service) UpdateCreateReport(ctx context.Context, offensive bool,violence bool,spam bool,in_appropriate bool) (interface{}, error) {
+func (s service) UpdateCreateReport(ctx context.Context, offensive bool,violence bool,spam bool,in_appropriate bool) (string, error) {
 	logger := log.With(s.logger,"method","UpdateCreateReport")
 	report := Report{
 
@@ -365,7 +363,7 @@ func (s service) GetSpeaker(ctx context.Context, id string) (interface{}, error)
 	return name, nil
 }
 
-func (s service) UpdateCreateSpeaker(ctx context.Context, name string, position string) (interface{}, error) {
+func (s service) UpdateCreateSpeaker(ctx context.Context, name string, position string) (string, error) {
 	logger := log.With(s.logger,"method","UpdateCreateSpeaker")
 	speaker := Speaker{
 		Name:     name,

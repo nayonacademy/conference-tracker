@@ -40,12 +40,12 @@ func (r repo) GetConfOwnProfile(ctx context.Context, id string) (interface{}, er
 	return profile, nil
 }
 
-func (r repo) UpdateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile) (interface{}, error) {
+func (r repo) UpdateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile) (string, error) {
 	err := r.db.Where("id = ?", confprofile.ID).Find(&confprofile).Update("reviews", confprofile.Reviews,"reads",confprofile.Reads,"useful",confprofile.Useful,"attend",confprofile.Attend,"favourite",confprofile.Favourite,"picture",confprofile.Picture).Error
 	if err != nil{
 		return "", RepoErr
 	}
-	return confprofile.ID, nil
+	return "confprofile.ID", nil
 }
 
 func (r repo) DeleteConfOwnProfile(ctx context.Context, id string) (string, error) {
@@ -91,7 +91,7 @@ func (r repo) GetConference(ctx context.Context, id string) (interface{}, error)
 	return profile, nil
 }
 
-func (r repo) UpdateCreateConference(ctx context.Context, conference Conference) (interface{}, error) {
+func (r repo) UpdateCreateConference(ctx context.Context, conference Conference) (string, error) {
 	err := r.db.Where("id = ?", conference.ID).Find(&conference).Update(
 		"name",conference.Name,
 		"website",conference.Website,
@@ -111,7 +111,7 @@ func (r repo) UpdateCreateConference(ctx context.Context, conference Conference)
 	if err != nil{
 		return "", RepoErr
 	}
-	return conference.ID, nil
+	return "conference.ID", nil
 }
 
 func (r repo) DeleteCreateConference(ctx context.Context, id string) (string, error) {
@@ -145,7 +145,7 @@ func (r repo) GetLocation(ctx context.Context, id string) (interface{}, error) {
 	return profile, nil
 }
 
-func (r repo) UpdateCreateLocation(ctx context.Context, location Location) (interface{}, error) {
+func (r repo) UpdateCreateLocation(ctx context.Context, location Location) (string, error) {
 	err := r.db.Where("id = ?", location.ID).Find(&location).Update(
 	"name",location.Name,
 	"date", location.Date,
@@ -153,7 +153,7 @@ func (r repo) UpdateCreateLocation(ctx context.Context, location Location) (inte
 	if err != nil{
 		return "", RepoErr
 	}
-	return location.ID, nil
+	return "location.ID", nil
 }
 
 func (r repo) DeleteCreateLocation(ctx context.Context, id string) (string, error) {
@@ -169,7 +169,6 @@ func (r repo) CreateRating(ctx context.Context, rating Rating) (string, error) {
 	err := r.db.Create(&Rating{
 		Rate:         rating.Rate,
 		Comment:      rating.Comment,
-		Image:        rating.Image,
 		Caption:      rating.Caption,
 		AttendQ:      rating.AttendQ,
 		EnjoyQ:       rating.EnjoyQ,
@@ -199,11 +198,10 @@ func (r repo) GetRating(ctx context.Context, id string) (interface{}, error) {
 	return profile, nil
 }
 
-func (r repo) UpdateCreateRating(ctx context.Context, rating Rating) (interface{}, error) {
+func (r repo) UpdateCreateRating(ctx context.Context, rating Rating) (string, error) {
 	err := r.db.Where("id = ?", rating.ID).Find(&rating).Update(
 		"rate",rating.Rate,
 		"comment", rating.Comment,
-		"image", rating.Image,
 		"caption", rating.Caption,
 		"attend_q", rating.AttendQ,
 		"enjoy_q",rating.EnjoyQ,
@@ -220,7 +218,7 @@ func (r repo) UpdateCreateRating(ctx context.Context, rating Rating) (interface{
 	if err != nil{
 		return "", RepoErr
 	}
-	return rating.ID, nil
+	return "rating.ID", nil
 }
 
 func (r repo) DeleteCreateRating(ctx context.Context, id string) (string, error) {
@@ -255,7 +253,7 @@ func (r repo) GetReport(ctx context.Context, id string) (interface{}, error) {
 	return profile, nil
 }
 
-func (r repo) UpdateCreateReport(ctx context.Context, report Report) (interface{}, error) {
+func (r repo) UpdateCreateReport(ctx context.Context, report Report) (string, error) {
 	err := r.db.Where("id = ?", report.ID).Find(&report).Update(
 		"offensive", report.Offensive,
 		"violence", report.Violence,
@@ -265,7 +263,7 @@ func (r repo) UpdateCreateReport(ctx context.Context, report Report) (interface{
 	if err != nil{
 		return "", RepoErr
 	}
-	return report.ID, nil
+	return "report.ID", nil
 }
 
 func (r repo) DeleteCreateReport(ctx context.Context, id string) (string, error) {
@@ -298,7 +296,7 @@ func (r repo) GetSpeaker(ctx context.Context, id string) (interface{}, error) {
 	return profile, nil
 }
 
-func (r repo) UpdateCreateSpeaker(ctx context.Context, speaker Speaker) (interface{}, error) {
+func (r repo) UpdateCreateSpeaker(ctx context.Context, speaker Speaker) (string, error) {
 	err := r.db.Where("id = ?", speaker.ID).Find(&speaker).Update(
 		"name", speaker.Name,
 		"position", speaker.Position,
@@ -306,7 +304,7 @@ func (r repo) UpdateCreateSpeaker(ctx context.Context, speaker Speaker) (interfa
 	if err != nil{
 		return "", RepoErr
 	}
-	return speaker.ID, nil
+	return "speaker.ID", nil
 }
 
 func (r repo) DeleteCreateSpeaker(ctx context.Context, id string) (string, error) {

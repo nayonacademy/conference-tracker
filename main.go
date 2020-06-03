@@ -65,13 +65,16 @@ func main(){
 	ctx := context.Background()
 	var srv account.Service
 	var srv_cat category.Service
+	var srv_conf conference.Service
 	//srv = account.instrumentingMiddleware{logger, svc}
 	//srv = account.instrumentingMiddleware{requestCount, requestLatency, countResult, srv}
 	{
 		repository := account.NewRepo(db, logger)
 		cat_repo := category.NewRepo(db, logger)
+		conf_repo := conference.NewRepo(db, logger)
 		srv = account.NewService(repository, logger)
 		srv_cat = category.NewService(cat_repo,logger)
+		srv_conf = conference.NewService(conf_repo, logger)
 	}
 
 	errs := make(chan error)
@@ -83,10 +86,12 @@ func main(){
 	}()
 	endpoints := account.MakeEndpoints(srv)
 	cat_endpoints := category.MakeEndpoints(srv_cat)
+	conf_endpoints := conference.MakeEndpoints(srv_conf)
 	go func() {
 		fmt.Println("listening on port", *httpAddr)
 		handler := account.NewHTTPServer(ctx, endpoints)
 		handler = category.NewHTTPServer(ctx, cat_endpoints)
+		handler = conference.NewHTTPServer(ctx, conf_endpoints)
 		errs <- http.ListenAndServe(*httpAddr, handler)
 	}()
 	level.Error(logger).Log("exit",<-errs)

@@ -126,7 +126,6 @@ type(
 	CreateRatingRequest struct {
 		Rate int16 `json:"rate"`
 		Comment string `json:"comment"`
-		Image *string `json:"image"`
 		Caption string `json:"caption"`
 		AttendQ bool `json:"attend_q"`
 		EnjoyQ bool `json:"enjoy_q"`
@@ -152,7 +151,6 @@ type(
 	UpdateCreateRatingRequest struct {
 		Rate int16 `json:"rate"`
 		Comment string `json:"comment"`
-		Image *string `json:"image"`
 		Caption string `json:"caption"`
 		AttendQ bool `json:"attend_q"`
 		EnjoyQ bool `json:"enjoy_q"`

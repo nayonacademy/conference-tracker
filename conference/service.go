@@ -21,9 +21,9 @@ type Service interface {
 	UpdateCreateLocation(ctx context.Context, name string, date time.Month, time time.Time)(string, error)
 	DeleteCreateLocation(ctx context.Context, id string)(string, error)
 
-	CreateRating(ctx context.Context, rate int16, comment string, image string, caption string, attend_q bool, enjoy_q bool, location_q bool, connectPeer_q bool, awesome int16, great int16, average int16, poor int16, terrible int16, favorite bool, like bool ) (string, error)
+	CreateRating(ctx context.Context, rate int16, comment string, caption string, attend_q bool, enjoy_q bool, location_q bool, connectPeer_q bool, awesome int16, great int16, average int16, poor int16, terrible int16, favorite bool, like bool ) (string, error)
 	GetRating(ctx context.Context, id string)(interface{}, error)
-	UpdateCreateRating(ctx context.Context, rate int16, comment string, image string, caption string, attend_q bool, enjoy_q bool, location_q bool, connectPeer_q bool, awesome int16, great int16, average int16, poor int16, terrible int16, favorite bool, like bool )(string, error)
+	UpdateCreateRating(ctx context.Context, rate int16, comment string, caption string, attend_q bool, enjoy_q bool, location_q bool, connectPeer_q bool, awesome int16, great int16, average int16, poor int16, terrible int16, favorite bool, like bool )(string, error)
 	DeleteCreateRating(ctx context.Context, id string)(string, error)
 
 	CreateReport(ctx context.Context, offensive bool,violence bool,spam bool,in_appropriate bool) (string, error)

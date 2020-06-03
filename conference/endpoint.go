@@ -159,7 +159,7 @@ func makeDeleteCreateLocationEndpoint(s Service) endpoint.Endpoint{
 func makeCreateRatingEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(CreateRatingRequest)
-		ok, err := s.CreateRating(ctx, req.Rate,req.Comment,req.Image,req.Caption,req.AttendQ,req.EnjoyQ,req.LocationQ,req.ConnectPeerQ,req.Awesome,req.Great,req.Average,req.Poor,req.Terrible,req.Favorite,req.Like)
+		ok, err := s.CreateRating(ctx, req.Rate, req.Comment, req.Caption, req.AttendQ, req.EnjoyQ, req.LocationQ, req.ConnectPeerQ, req.Awesome, req.Great, req.Average, req.Poor, req.Terrible, req.Favorite, req.Like)
 		return CreateRatingResponse{OK:ok}, err
 	}
 }
@@ -173,7 +173,7 @@ func makeGetRatingEndpoint(s Service) endpoint.Endpoint{
 func makeUpdateCreateRatingEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(UpdateCreateRatingRequest)
-		ok, err := s.UpdateCreateRating(ctx, req.Rate,req.Comment,req.Image,req.Caption,req.AttendQ,req.EnjoyQ,req.LocationQ,req.ConnectPeerQ,req.Awesome,req.Great,req.Average,req.Poor,req.Terrible,req.Favorite,req.Like)
+		ok, err := s.UpdateCreateRating(ctx, req.Rate,req.Comment, req.Caption,req.AttendQ,req.EnjoyQ,req.LocationQ,req.ConnectPeerQ,req.Awesome,req.Great,req.Average,req.Poor,req.Terrible,req.Favorite,req.Like)
 		return UpdateCreateRatingResponse{OK:ok}, err
 	}
 }

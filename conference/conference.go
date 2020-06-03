@@ -47,7 +47,6 @@ type Rating struct {
 	gorm.Model
 	Rate int16 `gorm:"not null" json:"rate"`
 	Comment string `gorm:"size:255; not null" json:"comment"`
-	Image string `gorm:"column:image"`
 	Caption string `gorm:"size:255; not null" json:"caption"`
 	AttendQ bool `json:"attend_q" sql:"DEFAULT:true;index" gorm:"not null"`
 	EnjoyQ bool `json:"enjoy_q" sql:"DEFAULT:true;index" gorm:"not null"`
@@ -78,7 +77,7 @@ type Speaker struct {
 type Repository interface {
 	CreateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile) (string, error)
 	GetConfOwnProfile(ctx context.Context, id string)(interface{}, error)
-	UpdateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile)(interface{}, error)
+	UpdateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile)(string, error)
 	DeleteConfOwnProfile(ctx context.Context, id string)(string, error)
 
 	CreateConference(ctx context.Context, conference Conference) (string, error)
