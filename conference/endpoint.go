@@ -86,7 +86,7 @@ func makeGetConfOwnProfileEndpoint(s Service) endpoint.Endpoint{
 func makeUpdateConfOwnProfileEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(UpdateConfOwnProfileRequest)
-		ok, err := s.UpdateConfOwnProfile(ctx, req.Name)
+		ok, err := s.UpdateConfOwnProfile(ctx, req.Reviews, req.Reads,req.Useful,req.Attend,req.Favourite,req.Picture)
 		return UpdateConfOwnProfileResponse{OK:ok}, err
 	}
 }
@@ -101,7 +101,7 @@ func makeDeleteConfOwnProfileEndpoint(s Service) endpoint.Endpoint{
 func makeCreateConferenceEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(CreateConferenceRequest)
-		ok, err := s.CreateConference(ctx, req.Name)
+		ok, err := s.CreateConference(ctx, req.Name, req.Website, req.About, req.Phone, req.Email, req.Address, req.City, req.ZipCode, req.Speakers, req.Facebook, req.Twitter, req.Instagram, req.OrganizerID, req.Locations, req.Rating )
 		return CreateConferenceResponse{OK:ok}, err
 	}
 }
@@ -115,7 +115,7 @@ func makeGetConferenceEndpoint(s Service) endpoint.Endpoint{
 func makeUpdateCreateConferenceEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(UpdateCreateConferenceRequest)
-		ok, err := s.UpdateCreateConference(ctx, req.Name)
+		ok, err := s.UpdateCreateConference(ctx, req.Name, req.Website, req.About, req.Phone, req.Email, req.Address, req.City, req.ZipCode, req.Speakers, req.Facebook, req.Twitter, req.Instagram, req.OrganizerID, req.Locations, req.Rating )
 		return UpdateCreateConferenceResponse{OK:ok}, err
 	}
 }
@@ -130,7 +130,7 @@ func makeDeleteCreateConferenceEndpoint(s Service) endpoint.Endpoint{
 func makeCreateLocationEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(CreateLocationRequest)
-		ok, err := s.CreateLocation(ctx, req.Name)
+		ok, err := s.CreateLocation(ctx, req.Name, req.Date, req.Time )
 		return CreateLocationResponse{OK:ok}, err
 	}
 }
@@ -144,7 +144,7 @@ func makeGetLocationEndpoint(s Service) endpoint.Endpoint{
 func makeUpdateCreateLocationEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(UpdateCreateLocationRequest)
-		ok, err := s.UpdateCreateLocation(ctx, req.Name)
+		ok, err := s.UpdateCreateLocation(ctx, req.Name, req.Date, req.Time )
 		return UpdateCreateLocationResponse{OK:ok}, err
 	}
 }
@@ -159,7 +159,7 @@ func makeDeleteCreateLocationEndpoint(s Service) endpoint.Endpoint{
 func makeCreateRatingEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(CreateRatingRequest)
-		ok, err := s.CreateRating(ctx, req)
+		ok, err := s.CreateRating(ctx, req.Rate,req.Comment,req.Image,req.Caption,req.AttendQ,req.EnjoyQ,req.LocationQ,req.ConnectPeerQ,req.Awesome,req.Great,req.Average,req.Poor,req.Terrible,req.Favorite,req.Like)
 		return CreateRatingResponse{OK:ok}, err
 	}
 }
@@ -173,7 +173,7 @@ func makeGetRatingEndpoint(s Service) endpoint.Endpoint{
 func makeUpdateCreateRatingEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(UpdateCreateRatingRequest)
-		ok, err := s.UpdateCreateRating(ctx, req.Name)
+		ok, err := s.UpdateCreateRating(ctx, req.Rate,req.Comment,req.Image,req.Caption,req.AttendQ,req.EnjoyQ,req.LocationQ,req.ConnectPeerQ,req.Awesome,req.Great,req.Average,req.Poor,req.Terrible,req.Favorite,req.Like)
 		return UpdateCreateRatingResponse{OK:ok}, err
 	}
 }
@@ -188,7 +188,7 @@ func makeDeleteCreateRatingEndpoint(s Service) endpoint.Endpoint{
 func makeCreateReportEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(CreateReportRequest)
-		ok, err := s.CreateReport(ctx, req.Name)
+		ok, err := s.CreateReport(ctx, req.Offensive,req.Violence,req.Spam,req.InAppropriate)
 		return CreateReportResponse{OK:ok}, err
 	}
 }
@@ -202,7 +202,7 @@ func makeGetReportEndpoint(s Service) endpoint.Endpoint{
 func makeUpdateCreateReportEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(UpdateCreateReportRequest)
-		ok, err := s.UpdateCreateReport(ctx, req.Name)
+		ok, err := s.UpdateCreateReport(ctx, req.Offensive,req.Violence,req.Spam,req.InAppropriate)
 		return UpdateCreateReportResponse{OK:ok}, err
 	}
 }
@@ -217,7 +217,7 @@ func makeDeleteCreateReportEndpoint(s Service) endpoint.Endpoint{
 func makeCreateSpeakerEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(CreateSpeakerRequest)
-		ok, err := s.CreateSpeaker(ctx, req.Name)
+		ok, err := s.CreateSpeaker(ctx, req.Name,req.Position)
 		return CreateSpeakerResponse{OK:ok}, err
 	}
 }
@@ -231,7 +231,7 @@ func makeGetSpeakerEndpoint(s Service) endpoint.Endpoint{
 func makeUpdateCreateSpeakerEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(UpdateCreateSpeakerRequest)
-		ok, err := s.UpdateCreateSpeaker(ctx, req)
+		ok, err := s.UpdateCreateSpeaker(ctx, req.Name,req.Position,)
 		return UpdateCreateSpeakerResponse{OK:ok}, err
 	}
 }

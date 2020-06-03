@@ -47,7 +47,7 @@ type Rating struct {
 	gorm.Model
 	Rate int16 `gorm:"not null" json:"rate"`
 	Comment string `gorm:"size:255; not null" json:"comment"`
-	Image *string `gorm:"column:image"`
+	Image string `gorm:"column:image"`
 	Caption string `gorm:"size:255; not null" json:"caption"`
 	AttendQ bool `json:"attend_q" sql:"DEFAULT:true;index" gorm:"not null"`
 	EnjoyQ bool `json:"enjoy_q" sql:"DEFAULT:true;index" gorm:"not null"`
@@ -83,27 +83,27 @@ type Repository interface {
 
 	CreateConference(ctx context.Context, conference Conference) (string, error)
 	GetConference(ctx context.Context, id string)(interface{}, error)
-	UpdateCreateConference(ctx context.Context, conference Conference)(interface{}, error)
+	UpdateCreateConference(ctx context.Context, conference Conference)(string, error)
 	DeleteCreateConference(ctx context.Context, id string)(string, error)
 
 	CreateLocation(ctx context.Context, location Location) (string, error)
 	GetLocation(ctx context.Context, id string)(interface{}, error)
-	UpdateCreateLocation(ctx context.Context, location Location)(interface{}, error)
+	UpdateCreateLocation(ctx context.Context, location Location)(string, error)
 	DeleteCreateLocation(ctx context.Context, id string)(string, error)
 
 	CreateRating(ctx context.Context, rating Rating) (string, error)
 	GetRating(ctx context.Context, id string)(interface{}, error)
-	UpdateCreateRating(ctx context.Context, rating Rating)(interface{}, error)
+	UpdateCreateRating(ctx context.Context, rating Rating)(string, error)
 	DeleteCreateRating(ctx context.Context, id string)(string, error)
 
 	CreateReport(ctx context.Context, report Report) (string, error)
 	GetReport(ctx context.Context, id string)(interface{}, error)
-	UpdateCreateReport(ctx context.Context, report Report)(interface{}, error)
+	UpdateCreateReport(ctx context.Context, report Report)(string, error)
 	DeleteCreateReport(ctx context.Context, id string)(string, error)
 
 	CreateSpeaker(ctx context.Context, speaker Speaker) (string, error)
 	GetSpeaker(ctx context.Context, id string)(interface{}, error)
-	UpdateCreateSpeaker(ctx context.Context, speaker Speaker)(interface{}, error)
+	UpdateCreateSpeaker(ctx context.Context, speaker Speaker)(string, error)
 	DeleteCreateSpeaker(ctx context.Context, id string)(string, error)
 }
 
