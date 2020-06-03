@@ -3,6 +3,7 @@ package conference
 import (
 	"context"
 	"errors"
+	"fmt"
 	"github.com/go-kit/kit/log"
 	"github.com/jinzhu/gorm"
 )
@@ -293,6 +294,7 @@ func (r repo) GetSpeaker(ctx context.Context, id string) (interface{}, error) {
 	if err != nil{
 		return "", RepoErr
 	}
+	fmt.Println(speaker)
 	return profile, nil
 }
 
