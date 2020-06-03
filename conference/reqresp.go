@@ -438,3 +438,4 @@ func decodeDeleteCreateSpeakerRequest(ctx context.Context, r *http.Request)(inte
 	}
 	return req, nil
 	}
+

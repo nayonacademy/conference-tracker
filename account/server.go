@@ -39,6 +39,21 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
 		decodeTokenReq,
 		encodeResponse,
 		))
+
+	r.Methods("POST").Path("/speaker").Handler(httptransport.NewServer(
+		//gokitjwt.NewParser(account.JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateCategory),
+		endpoints.CreateSpeaker,
+		decodeCreateSpeakerRequest,
+		encodeResponse,
+		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
+	))
+	r.Methods("GET").Path("/speaker/{id}").Handler(httptransport.NewServer(
+		//gokitjwt.NewParser(account.JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateCategory),
+		endpoints.GetSpeaker,
+		decodeGetSpeakerRequest,
+		encodeResponse,
+		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
+	))
 	//return handlers.CORS()(r)
 	return r
 }

@@ -69,6 +69,7 @@ func MakeEndpoints(s Service) Endpoints{
 		DeleteCreateSpeaker:makeDeleteCreateSpeakerEndpoint(s),
 	}
 }
+
 func makeCreateConfOwnProfileEndpoint(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 		req := request.(CreateConfOwnProfileRequest)
