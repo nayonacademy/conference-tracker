@@ -430,9 +430,9 @@ func (s service) DeleteCreateSpeaker(ctx context.Context, id string) (string, er
 	logger.Log("get category", name)
 	return name, nil
 }
-func (s service) GetCategory(ctx context.Context) ([]Category, error) {
+func (s service) GetCategory(ctx context.Context, id string) ([]Category, error) {
 	logger := log.With(s.logger,"method","GetCategory")
-	cat, err := s.repostory.GetCategory(ctx)
+	cat, err := s.repostory.GetCategory(ctx, id)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return []Category{}, err
@@ -442,7 +442,7 @@ func (s service) GetCategory(ctx context.Context) ([]Category, error) {
 }
 func (s service) GetCategories(ctx context.Context) ([]Category, error) {
 	logger := log.With(s.logger,"method","GetCategory")
-	cat, err := s.repostory.GetCategory(ctx)
+	cat, err := s.repostory.GetCategories(ctx)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return []Category{}, err

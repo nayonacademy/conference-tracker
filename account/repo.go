@@ -383,11 +383,11 @@ func (r repo) CreateCategory(ctx context.Context, category Category) error {
 	return nil
 }
 
-func (r repo) GetCategory(ctx context.Context) ([]Category, error) {
+func (r repo) GetCategory(ctx context.Context, id string) ([]Category, error) {
 
 	var category []Category
-	//result := r.db.Where("id = ?", id).First(&category).Scan(&category)
-	result := r.db.First(&category).Scan(&category)
+	result := r.db.Where("id = ?", id).First(&category).Scan(&category)
+	//result := r.db.First(&category).Scan(&category)
 	if result.Error != nil{
 		return []Category{}, RepoErr
 	}
