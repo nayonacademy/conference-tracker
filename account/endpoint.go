@@ -93,11 +93,22 @@ func makeCreateUserEndpoints(s Service) endpoint.Endpoint{
 	}
 }
 
-func makeGetUserEndpoint(s Service) endpoint.Endpoint{
-	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
+//func makeGetUserEndpoint(s Service) endpoint.Endpoint{
+//	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
+//		req := request.(GetUserRequest)
+//		email, err := s.GetUser(ctx, req.Id)
+//		return GetUserResponse{Email:email}, err
+//	}
+//}
+
+func makeGetUserEndpoint(s Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(GetUserRequest)
-		id, err := s.GetUser(ctx, req.Email)
-		return GetUserResponse{Id:id}, err
+		email, err := s.GetUser(ctx, req.Id)
+
+		return GetUserResponse{
+			Email: email,
+		}, err
 	}
 }
 

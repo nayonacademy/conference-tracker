@@ -26,15 +26,20 @@ func (s service) CreateUser(ctx context.Context, email string, password string) 
 	return "success", nil
 }
 
-func (s service) GetUser(ctx context.Context, email string) (string, error) {
-	logger := log.With(s.logger,"method","GetUser")
-	id, err := s.repostory.GetUser(ctx, email)
-	if err != nil{
+
+func (s service) GetUser(ctx context.Context, id string) (string, error) {
+	logger := log.With(s.logger, "method", "GetUser")
+
+	email, err := s.repostory.GetUser(ctx, id)
+
+	if err != nil {
 		level.Error(logger).Log("err", err)
 		return "", err
 	}
-	logger.Log("get user", id)
-	return id, nil
+
+	logger.Log("Get user", id)
+
+	return email, nil
 }
 
 func (s service) Login(ctx context.Context, email string, password string) (string, error) {

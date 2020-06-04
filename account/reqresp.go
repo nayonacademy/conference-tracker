@@ -3,6 +3,7 @@ package account
 import (
 	"context"
 	"encoding/json"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/gorilla/mux"
 	"net/http"
 	"time"
@@ -17,10 +18,10 @@ type(
 		Ok string `json:"ok"`
 	}
 	GetUserRequest struct {
-		Email string	`json:"email"`
+		Id string `json:"id"`
 	}
 	GetUserResponse struct {
-		Id string	`json:"id"`
+		Email string `json:"email"`
 	}
 	LoginRequest struct {
 		Email string	`json:"email"`
@@ -280,12 +281,23 @@ func decodeUserReq(ctx context.Context, r *http.Request) (interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return req, nil
 }
 func decodeIdReq(ctx context.Context, r *http.Request)(interface{}, error){
 	var req GetUserRequest
 	vars := mux.Vars(r)
-	req = GetUserRequest{Email:vars["email"]}
+	req = GetUserRequest{Id:vars["id"]}
+	spew.Dump(req)
+	return req, nil
+}
+func decodeEmailReq(ctx context.Context, r *http.Request) (interface{}, error) {
+	var req GetUserRequest
+	vars := mux.Vars(r)
+
+	req = GetUserRequest{
+		Id: vars["id"],
+	}
 	return req, nil
 }
 func decodeTokenReq(ctx context.Context, r *http.Request)(interface{}, error){

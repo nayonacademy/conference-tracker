@@ -7,7 +7,7 @@ import (
 
 type Service interface {
 	CreateUser(ctx context.Context, email string, password string) (string, error)
-	GetUser(ctx context.Context, email string)(string, error)
+	GetUser(ctx context.Context, id string) (string, error)
 	Login(ctx context.Context, email string, password string)(string, error)
 
 	CreateCategory(ctx context.Context, name string) (string, error)

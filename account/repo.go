@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/go-kit/kit/log"
 	"github.com/jinzhu/gorm"
 )
@@ -29,14 +30,25 @@ func (r *repo) CreateUser(ctx context.Context, user User) error {
 	return nil
 }
 
-func (r *repo) GetUser(ctx context.Context, email string) (string, error) {
-	var id string
+//func (r *repo) GetUser(ctx context.Context, id string) (string, error) {
+//	var user User
+//	err := r.db.First(&user, "id = ?", id)
+//	if err != nil{
+//		return "", RepoErr
+//	}
+//	spew.Dump(user)
+//	spew.Dump(id)
+//	return "email", nil
+//}
+
+func (r *repo) GetUser(ctx context.Context, id string) (string, error) {
 	var user User
-	err := r.db.First(&user, "email = ?", email)
-	if err != nil{
+	result := r.db.Where("id = ?", id).First(&user).Scan(&user)
+	if result.Error != nil{
 		return "", RepoErr
 	}
-	return id, nil
+	spew.Dump(user.Email)
+	return user.Email, nil
 }
 
 func (r *repo) Login(ctx context.Context, email string, password string) (string, error) {
