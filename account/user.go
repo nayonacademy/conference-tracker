@@ -11,7 +11,10 @@ type User struct {
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
-
+type Category struct {
+	gorm.Model
+	Name string `json:"name"`
+}
 type ConfOwnProfile struct {
 	gorm.Model
 	Reviews int16	`json:"reviews"`
@@ -80,36 +83,42 @@ type Speaker struct {
 }
 
 type Repository interface {
+	// ConfOwnProfile
 	CreateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile) (string, error)
 	GetConfOwnProfile(ctx context.Context, id string)(interface{}, error)
 	UpdateConfOwnProfile(ctx context.Context, confprofile ConfOwnProfile)(string, error)
 	DeleteConfOwnProfile(ctx context.Context, id string)(string, error)
-
+	// Conference
 	CreateConference(ctx context.Context, conference Conference) (string, error)
 	GetConference(ctx context.Context, id string)(interface{}, error)
 	UpdateCreateConference(ctx context.Context, conference Conference)(string, error)
 	DeleteCreateConference(ctx context.Context, id string)(string, error)
-
+	// Location
 	CreateLocation(ctx context.Context, location Location) (string, error)
 	GetLocation(ctx context.Context, id string)(interface{}, error)
 	UpdateCreateLocation(ctx context.Context, location Location)(string, error)
 	DeleteCreateLocation(ctx context.Context, id string)(string, error)
-
+	// Rating
 	CreateRating(ctx context.Context, rating Rating) (string, error)
 	GetRating(ctx context.Context, id string)(interface{}, error)
 	UpdateCreateRating(ctx context.Context, rating Rating)(string, error)
 	DeleteCreateRating(ctx context.Context, id string)(string, error)
-
+	// Report
 	CreateReport(ctx context.Context, report Report) (string, error)
 	GetReport(ctx context.Context, id string)(interface{}, error)
 	UpdateCreateReport(ctx context.Context, report Report)(string, error)
 	DeleteCreateReport(ctx context.Context, id string)(string, error)
-
+	// Speaker
 	CreateSpeaker(ctx context.Context, speaker Speaker) (string, error)
 	GetSpeaker(ctx context.Context, id string)(interface{}, error)
 	UpdateCreateSpeaker(ctx context.Context, speaker Speaker)(string, error)
 	DeleteCreateSpeaker(ctx context.Context, id string)(string, error)
-
+	// Category
+	CreateCategory(ctx context.Context, category Category) error
+	//GetCategories(ctx context.Context) (string, error)
+	GetCategory(ctx context.Context, name string)(string, error)
+	UpdateCategory(ctx context.Context, name string)(string, error)
+	// User
 	CreateUser(ctx context.Context, user User) error
 	GetUser(ctx context.Context, email string) (string, error)
 	Login(ctx context.Context, email string, password string)(string, error)

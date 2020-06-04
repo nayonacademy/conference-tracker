@@ -10,6 +10,11 @@ type Service interface {
 	GetUser(ctx context.Context, email string)(string, error)
 	Login(ctx context.Context, email string, password string)(string, error)
 
+	CreateCategory(ctx context.Context, name string) (string, error)
+	//GetCategories(ctx context.Context) (string, error)
+	GetCategory(ctx context.Context, id string)(string, error)
+	UpdateCategory(ctx context.Context, name string)(string, error)
+
 	CreateConfOwnProfile(ctx context.Context, reviews int16,reads int16,useful int16,attend int16,favourite string,picture string) (string, error)
 	GetConfOwnProfile(ctx context.Context, id string)(interface{}, error)
 	UpdateConfOwnProfile(ctx context.Context, reviews int16,reads int16,useful int16,attend int16,favourite string,picture string)(string, error)
