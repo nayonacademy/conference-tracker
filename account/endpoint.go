@@ -2,6 +2,7 @@ package account
 
 import (
 	"context"
+	"fmt"
 	"github.com/go-kit/kit/endpoint"
 )
 
@@ -307,8 +308,8 @@ func makeCreateCategoryEndpoints(s Service) endpoint.Endpoint{
 
 func makeGetCategoryEndpoints(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{})(response interface{}, err error){
-		req := request.(GetCategoryRequest)
-		cat, err := s.GetCategory(ctx, req.Id)
+		//req := request.(GetCategoryRequest)
+		cat, err := s.GetCategory(ctx)
 		return GetCategoryResponse{Category:cat}, err
 	}
 }
@@ -316,6 +317,7 @@ func makeGetCategoryEndpoints(s Service) endpoint.Endpoint{
 func makeGetCategoriesEndpoints(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{})(response interface{}, err error){
 		cat, err := s.GetCategories(ctx)
+		fmt.Println("endpoint", cat)
 		return GetCategoriesResponse{Category:cat}, err
 	}
 }

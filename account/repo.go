@@ -383,23 +383,26 @@ func (r repo) CreateCategory(ctx context.Context, category Category) error {
 	return nil
 }
 
-func (r repo) GetCategory(ctx context.Context, id string) (Category, error) {
-
-	var category Category
-	result := r.db.Where("id = ?", id).First(&category).Scan(&category)
-	if result.Error != nil{
-		return Category{}, RepoErr
-	}
-	return category, nil
-}
-func (r repo) GetCategories(ctx context.Context) ([]Category, error) {
+func (r repo) GetCategory(ctx context.Context) ([]Category, error) {
 
 	var category []Category
-	result := r.db.Find(&category).Scan(&category)
+	//result := r.db.Where("id = ?", id).First(&category).Scan(&category)
+	result := r.db.First(&category).Scan(&category)
 	if result.Error != nil{
 		return []Category{}, RepoErr
 	}
 	return category, nil
+}
+func (r repo) GetCategories(ctx context.Context) ([]Category, error) {
+	fmt.Println("repo")
+	var category []Category
+	//result := r.db.Find(&category).Scan(&category)
+	result := r.db.Where("id = ?", 1).First(&category).Scan(&category)
+	fmt.Println(result)
+	if result.Error != nil{
+		return []Category{}, RepoErr
+	}
+	return []Category{}, nil
 }
 func (r repo) UpdateCategory(ctx context.Context, name string) (string, error) {
 	var category Category

@@ -64,7 +64,7 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
 	r.Methods("GET").Path("/category").Handler(httptransport.NewServer(
 		//gokitjwt.NewParser(account.JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateCategory),
 		endpoints.GetCategories,
-		decodeCategoryReq,
+		decodeCategoriesReq,
 		encodeResponse,
 		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 	))

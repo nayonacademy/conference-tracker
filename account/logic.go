@@ -2,6 +2,7 @@ package account
 
 import (
 	"context"
+	"fmt"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	"time"
@@ -430,19 +431,21 @@ func (s service) DeleteCreateSpeaker(ctx context.Context, id string) (string, er
 	logger.Log("get category", name)
 	return name, nil
 }
-func (s service) GetCategory(ctx context.Context, id string) (Category, error) {
+func (s service) GetCategory(ctx context.Context) ([]Category, error) {
 	logger := log.With(s.logger,"method","GetCategory")
-	cat, err := s.repostory.GetCategory(ctx, id)
+	cat, err := s.repostory.GetCategory(ctx)
 	if err != nil{
 		level.Error(logger).Log("err",err)
-		return Category{}, err
+		return []Category{}, err
 	}
 	logger.Log("get category", cat)
 	return cat, nil
 }
 func (s service) GetCategories(ctx context.Context) ([]Category, error) {
 	logger := log.With(s.logger,"method","GetCategory")
+	fmt.Println("logic")
 	cat, err := s.repostory.GetCategories(ctx)
+	fmt.Println("cat")
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return []Category{}, err

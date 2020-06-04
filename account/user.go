@@ -116,7 +116,7 @@ type Repository interface {
 	// Category
 	CreateCategory(ctx context.Context, category Category) error
 	GetCategories(ctx context.Context) ([]Category, error)
-	GetCategory(ctx context.Context, name string)(Category, error)
+	GetCategory(ctx context.Context)([]Category, error)
 	UpdateCategory(ctx context.Context, name string)(string, error)
 	// User
 	CreateUser(ctx context.Context, user User) error

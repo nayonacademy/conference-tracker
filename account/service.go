@@ -12,7 +12,7 @@ type Service interface {
 
 	CreateCategory(ctx context.Context, name string) (string, error)
 	GetCategories(ctx context.Context) ([]Category, error)
-	GetCategory(ctx context.Context, id string)(Category, error)
+	GetCategory(ctx context.Context)([]Category, error)
 	UpdateCategory(ctx context.Context, name string)(string, error)
 
 	CreateConfOwnProfile(ctx context.Context, reviews int16,reads int16,useful int16,attend int16,favourite string,picture string) (string, error)
