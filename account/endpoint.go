@@ -308,7 +308,7 @@ func makeCreateCategoryEndpoints(s Service) endpoint.Endpoint{
 
 func makeGetCategoryEndpoints(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{})(response interface{}, err error){
-		//req := request.(GetCategoryRequest)
+		_ = request.(GetCategoryTestRequest)
 		cat, err := s.GetCategory(ctx)
 		return GetCategoryResponse{Category:cat}, err
 	}

@@ -39,6 +39,7 @@ type(
 	GetCategoryRequest struct {
 		Id string	`json:"id"`
 	}
+	GetCategoryTestRequest struct {}
 
 	GetCategoryResponse struct {
 		Category []Category `json:"category"`
@@ -519,12 +520,13 @@ func decodeDeleteCreateSpeakerRequest(ctx context.Context, r *http.Request)(inte
 }
 
 func decodeCategoryReq(ctx context.Context, r *http.Request)(interface{}, error){
-	var req CreateCategoryRequest
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil{
-		return nil, err
-	}
-	return req, nil
+	//var req CreateCategoryRequest
+	//err := json.NewDecoder(r.Body).Decode(&req)
+	//if err != nil{
+	//	return nil, err
+	//}
+	//return req, nil
+	return GetCategoryTestRequest{}, nil
 }
 
 func decodeCategoriesReq(ctx context.Context, r *http.Request)(interface{}, error){
