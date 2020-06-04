@@ -25,17 +25,17 @@ func (mw loggingMiddleware) CreateUser(ctx context.Context, email string, passwo
 	return
 }
 
-func (mw loggingMiddleware) GetUser(ctx context.Context, email string)(output string, err error){
+func (mw loggingMiddleware) GetUser(ctx context.Context, id string)(output User, err error){
 	defer func(begin time.Time) {
 		_ = mw.logger.Log(
 			"method","createuser",
-			"input", email,
+			"input", id,
 			"output",output,
 			"err", err,
 			"took", time.Since(begin),
 		)
 	}(time.Now())
-	output, err = mw.next.GetUser(ctx, email)
+	output, err = mw.next.GetUser(ctx, id)
 	return
 }
 

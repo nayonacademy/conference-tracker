@@ -24,13 +24,13 @@ func (mw instrumentingMiddleware) CreateUser(ctx context.Context, email string, 
 	return
 }
 
-func (mw instrumentingMiddleware) GetUser(ctx context.Context, email string)(output string, err error){
+func (mw instrumentingMiddleware) GetUser(ctx context.Context, id string)(output User, err error){
 	defer func(begin time.Time) {
 		lvs := []string{"method","getuser","error", fmt.Sprint(err != nil)}
 		mw.requestCount.With(lvs...).Add(1)
 		mw.requestLatency.With(lvs...).Observe(time.Since(begin).Seconds())
 	}(time.Now())
-	output, err = mw.next.GetUser(ctx, email)
+	output, err = mw.next.GetUser(ctx, id)
 	return
 }
 

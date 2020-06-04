@@ -27,19 +27,19 @@ func (s service) CreateUser(ctx context.Context, email string, password string) 
 }
 
 
-func (s service) GetUser(ctx context.Context, id string) (string, error) {
+func (s service) GetUser(ctx context.Context, id string) (User, error) {
 	logger := log.With(s.logger, "method", "GetUser")
 
-	email, err := s.repostory.GetUser(ctx, id)
+	user, err := s.repostory.GetUser(ctx, id)
 
 	if err != nil {
 		level.Error(logger).Log("err", err)
-		return "", err
+		return User{}, err
 	}
 
 	logger.Log("Get user", id)
 
-	return email, nil
+	return user, nil
 }
 
 func (s service) Login(ctx context.Context, email string, password string) (string, error) {
@@ -430,17 +430,26 @@ func (s service) DeleteCreateSpeaker(ctx context.Context, id string) (string, er
 	logger.Log("get category", name)
 	return name, nil
 }
-func (s service) GetCategory(ctx context.Context, id string) (string, error) {
+func (s service) GetCategory(ctx context.Context, id string) (Category, error) {
 	logger := log.With(s.logger,"method","GetCategory")
-	name, err := s.repostory.GetCategory(ctx, id)
+	cat, err := s.repostory.GetCategory(ctx, id)
 	if err != nil{
 		level.Error(logger).Log("err",err)
-		return "", err
+		return Category{}, err
 	}
-	logger.Log("get category", name)
-	return name, nil
+	logger.Log("get category", cat)
+	return cat, nil
 }
-
+func (s service) GetCategories(ctx context.Context) ([]Category, error) {
+	logger := log.With(s.logger,"method","GetCategory")
+	cat, err := s.repostory.GetCategories(ctx)
+	if err != nil{
+		level.Error(logger).Log("err",err)
+		return []Category{}, err
+	}
+	logger.Log("get category", cat)
+	return cat, nil
+}
 func (s service) UpdateCategory(ctx context.Context, name string) (string, error) {
 	logger := log.With(s.logger, "method","UpdateCategory")
 	name, err := s.repostory.UpdateCategory(ctx, name)

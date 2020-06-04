@@ -41,14 +41,15 @@ func (r *repo) CreateUser(ctx context.Context, user User) error {
 //	return "email", nil
 //}
 
-func (r *repo) GetUser(ctx context.Context, id string) (string, error) {
+func (r *repo) GetUser(ctx context.Context, id string) (User, error) {
 	var user User
-	result := r.db.Where("id = ?", id).First(&user).Scan(&user)
+	result := r.db.Select("email").Where("id = ?", id).First(&user).Scan(&user)
+	//db.Select("name, age").Find(&users)
 	if result.Error != nil{
-		return "", RepoErr
+		return User{}, RepoErr
 	}
 	spew.Dump(user.Email)
-	return user.Email, nil
+	return user, nil
 }
 
 func (r *repo) Login(ctx context.Context, email string, password string) (string, error) {
@@ -382,16 +383,24 @@ func (r repo) CreateCategory(ctx context.Context, category Category) error {
 	return nil
 }
 
-func (r repo) GetCategory(ctx context.Context, id string) (string, error) {
-	var name string
-	var category Category
-	err := r.db.Find(&category, "id = ?",id)
-	if err != nil{
-		return "", RepoErr
-	}
-	return name, nil
-}
+func (r repo) GetCategory(ctx context.Context, id string) (Category, error) {
 
+	var category Category
+	result := r.db.Where("id = ?", id).First(&category).Scan(&category)
+	if result.Error != nil{
+		return Category{}, RepoErr
+	}
+	return category, nil
+}
+func (r repo) GetCategories(ctx context.Context) ([]Category, error) {
+
+	var category []Category
+	result := r.db.Find(&category).Scan(&category)
+	if result.Error != nil{
+		return []Category{}, RepoErr
+	}
+	return category, nil
+}
 func (r repo) UpdateCategory(ctx context.Context, name string) (string, error) {
 	var category Category
 	err := r.db.Where("name = ?", name).Find(&category).Update("name", name).Error

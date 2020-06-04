@@ -21,7 +21,7 @@ type(
 		Id string `json:"id"`
 	}
 	GetUserResponse struct {
-		Email string `json:"email"`
+		User User `json:"user"`
 	}
 	LoginRequest struct {
 		Email string	`json:"email"`
@@ -40,7 +40,10 @@ type(
 		Id string	`json:"id"`
 	}
 	GetCategoryResponse struct {
-		Name string `json:"name"`
+		Category Category `json:"category"`
+	}
+	GetCategoriesResponse struct {
+		Category []Category `json:"categories"`
 	}
 	UpdateCategoryRequest struct {
 		Name string `json:"name"`

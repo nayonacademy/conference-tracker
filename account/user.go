@@ -115,11 +115,11 @@ type Repository interface {
 	DeleteCreateSpeaker(ctx context.Context, id string)(string, error)
 	// Category
 	CreateCategory(ctx context.Context, category Category) error
-	//GetCategories(ctx context.Context) (string, error)
-	GetCategory(ctx context.Context, name string)(string, error)
+	GetCategories(ctx context.Context) ([]Category, error)
+	GetCategory(ctx context.Context, name string)(Category, error)
 	UpdateCategory(ctx context.Context, name string)(string, error)
 	// User
 	CreateUser(ctx context.Context, user User) error
-	GetUser(ctx context.Context, id string) (string, error)
+	GetUser(ctx context.Context, id string) (User, error)
 	Login(ctx context.Context, email string, password string)(string, error)
 }

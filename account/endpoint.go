@@ -12,6 +12,7 @@ type Endpoints struct {
 
 	CreateCategory endpoint.Endpoint
 	GetCategory endpoint.Endpoint
+	GetCategories endpoint.Endpoint
 	UpdateCategory endpoint.Endpoint
 
 	CreateConfOwnProfile endpoint.Endpoint
@@ -81,6 +82,7 @@ func MakeEndpoints(s Service) Endpoints{
 
 		CreateCategory: makeCreateCategoryEndpoints(s),
 		GetCategory:    makeGetCategoryEndpoints(s),
+		GetCategories: makeGetCategoriesEndpoints(s),
 		UpdateCategory: makeUpdateCategoryEndpoints(s),
 	}
 }
@@ -104,10 +106,10 @@ func makeCreateUserEndpoints(s Service) endpoint.Endpoint{
 func makeGetUserEndpoint(s Service) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(GetUserRequest)
-		email, err := s.GetUser(ctx, req.Id)
+		user, err := s.GetUser(ctx, req.Id)
 
 		return GetUserResponse{
-			Email: email,
+			User: user,
 		}, err
 	}
 }
@@ -306,8 +308,15 @@ func makeCreateCategoryEndpoints(s Service) endpoint.Endpoint{
 func makeGetCategoryEndpoints(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{})(response interface{}, err error){
 		req := request.(GetCategoryRequest)
-		name, err := s.GetCategory(ctx, req.Id)
-		return GetCategoryResponse{Name:name}, err
+		cat, err := s.GetCategory(ctx, req.Id)
+		return GetCategoryResponse{Category:cat}, err
+	}
+}
+
+func makeGetCategoriesEndpoints(s Service) endpoint.Endpoint{
+	return func(ctx context.Context, request interface{})(response interface{}, err error){
+		cat, err := s.GetCategories(ctx)
+		return GetCategoriesResponse{Category:cat}, err
 	}
 }
 
