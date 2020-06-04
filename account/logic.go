@@ -2,7 +2,6 @@ package account
 
 import (
 	"context"
-	"fmt"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	"time"
@@ -443,9 +442,7 @@ func (s service) GetCategory(ctx context.Context) ([]Category, error) {
 }
 func (s service) GetCategories(ctx context.Context) ([]Category, error) {
 	logger := log.With(s.logger,"method","GetCategory")
-	fmt.Println("logic")
-	cat, err := s.repostory.GetCategories(ctx)
-	fmt.Println("cat")
+	cat, err := s.repostory.GetCategory(ctx)
 	if err != nil{
 		level.Error(logger).Log("err",err)
 		return []Category{}, err

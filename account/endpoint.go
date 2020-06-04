@@ -316,6 +316,7 @@ func makeGetCategoryEndpoints(s Service) endpoint.Endpoint{
 
 func makeGetCategoriesEndpoints(s Service) endpoint.Endpoint{
 	return func(ctx context.Context, request interface{})(response interface{}, err error){
+		_ = request.(GetCategoriesRequest)
 		cat, err := s.GetCategories(ctx)
 		fmt.Println("endpoint", cat)
 		return GetCategoriesResponse{Category:cat}, err

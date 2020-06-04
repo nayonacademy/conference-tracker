@@ -44,6 +44,7 @@ type(
 	GetCategoryResponse struct {
 		Category []Category `json:"category"`
 	}
+	GetCategoriesRequest struct {}
 	GetCategoriesResponse struct {
 		Category []Category `json:"categories"`
 	}
@@ -530,12 +531,7 @@ func decodeCategoryReq(ctx context.Context, r *http.Request)(interface{}, error)
 }
 
 func decodeCategoriesReq(ctx context.Context, r *http.Request)(interface{}, error){
-	var req interface{}
-	err := json.NewDecoder(r.Body).Decode(&req)
-	if err != nil{
-		return nil, err
-	}
-	return req, nil
+	return GetCategoriesRequest{}, nil
 }
 func decodeGetReq(ctx context.Context, r *http.Request)(interface{}, error){
 	var req GetCategoryRequest
