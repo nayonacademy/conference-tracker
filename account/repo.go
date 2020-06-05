@@ -3,7 +3,6 @@ package account
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/davecgh/go-spew/spew"
 	"github.com/go-kit/kit/log"
 	"github.com/jinzhu/gorm"
@@ -339,15 +338,23 @@ func (r repo) CreateSpeaker(ctx context.Context, speaker Speaker) (string, error
 	return "success", nil
 }
 
-func (r repo) GetSpeaker(ctx context.Context, id string) (interface{}, error) {
-	var profile string
+func (r repo) GetSpeaker(ctx context.Context, id string) (Speaker, error) {
 	var speaker Speaker
-	err := r.db.Find(&speaker, "id = ?",id)
-	if err != nil{
-		return "", RepoErr
+	result := r.db.Where("id = ?", id).First(&speaker).Scan(&speaker)
+	//result := r.db.First(&category).Scan(&category)
+	if result.Error != nil{
+		return Speaker{}, RepoErr
 	}
-	fmt.Println(speaker)
-	return profile, nil
+	return speaker, nil
+}
+
+func (r repo) GetAllSpeaker(ctx context.Context)([]Speaker, error) {
+	var speaker []Speaker
+	result := r.db.Find(&speaker).Scan(&speaker)
+	if result.Error != nil{
+		return []Speaker{}, RepoErr
+	}
+	return speaker, nil
 }
 
 func (r repo) UpdateCreateSpeaker(ctx context.Context, speaker Speaker) (string, error) {

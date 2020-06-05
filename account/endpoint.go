@@ -43,6 +43,7 @@ type Endpoints struct {
 
 	CreateSpeaker endpoint.Endpoint
 	GetSpeaker endpoint.Endpoint
+	GetAllSpeaker endpoint.Endpoint
 	UpdateCreateSpeaker endpoint.Endpoint
 	DeleteCreateSpeaker endpoint.Endpoint
 }
@@ -78,6 +79,7 @@ func MakeEndpoints(s Service) Endpoints{
 
 		CreateSpeaker:makeCreateSpeakerEndpoint(s),
 		GetSpeaker:makeGetSpeakerEndpoint(s),
+		GetAllSpeaker:makeGetAllSpeakerEndpoint(s),
 		UpdateCreateSpeaker:makeUpdateCreateSpeakerEndpoint(s),
 		DeleteCreateSpeaker:makeDeleteCreateSpeakerEndpoint(s),
 
@@ -282,6 +284,13 @@ func makeGetSpeakerEndpoint(s Service) endpoint.Endpoint{
 		req := request.(GetSpeakerRequest)
 		ok, err := s.GetSpeaker(ctx, req.Id)
 		return GetSpeakerResponse{Speaker:ok}, err
+	}
+}
+func makeGetAllSpeakerEndpoint(s Service) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (response interface{}, err error) {
+		_ = request.(GetAllSpeakerRequest)
+		ok, err := s.GetAllSpeaker(ctx)
+		return GetAllSpeakerResponse{Speaker:ok}, err
 	}
 }
 func makeUpdateCreateSpeakerEndpoint(s Service) endpoint.Endpoint{

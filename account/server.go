@@ -17,71 +17,78 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
 
 	r := mux.NewRouter()
 	r.Use(CORS)
+
+	//Create New user
 	r.Methods("POST").Path("/user").Handler(httptransport.NewServer(
 		endpoints.CreateUser,
 		decodeUserReq,
 		encodeResponse,
 		))
+	// Get a Single User details
 	r.Methods("GET").Path("/user/{id}").Handler(httptransport.NewServer(
-		endpoints.GetUser,
+		gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.GetUser),
 		decodeEmailReq,
 		encodeResponse,
 		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 	))
-	r.Methods("POST").Path("/users").Handler(httptransport.NewServer(
-		gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.GetUser),
-		decodeIdReq,
-		encodeResponse,
-		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
-	))
+	// User Login and get Bearer Token
 	r.Methods("POST").Path("/login").Handler(httptransport.NewServer(
 		endpoints.Login,
 		decodeTokenReq,
 		encodeResponse,
 		))
-
+	// Create Speaker
 	r.Methods("POST").Path("/speaker").Handler(httptransport.NewServer(
-		//gokitjwt.NewParser(account.JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateCategory),
-		endpoints.CreateSpeaker,
+		gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateSpeaker),
+		//endpoints.CreateSpeaker,
 		decodeCreateSpeakerRequest,
 		encodeResponse,
 		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 	))
+	// Get all speaker
+	r.Methods("GET").Path("/speaker").Handler(httptransport.NewServer(
+		gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.GetAllSpeaker),
+		//endpoints.CreateSpeaker,
+		decodeGetAllSpeakerRequest,
+		encodeResponse,
+		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
+	))
+	// Get a single Speaker details
 	r.Methods("GET").Path("/speaker/{id}").Handler(httptransport.NewServer(
-		//gokitjwt.NewParser(account.JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateCategory),
-		endpoints.GetSpeaker,
+		gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.GetSpeaker),
+		//endpoints.GetSpeaker,
 		decodeGetSpeakerRequest,
 		encodeResponse,
 		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 	))
+	// Create Category
 	r.Methods("POST").Path("/category").Handler(httptransport.NewServer(
-		//gokitjwt.NewParser(account.JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateCategory),
-		endpoints.CreateCategory,
+		gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateCategory),
 		decodeCategoryReq,
 		encodeResponse,
 		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 	))
-	r.Methods("GET").Path("/category/all").Handler(httptransport.NewServer(
+	// Get All Category
+	r.Methods("GET").Path("/category").Handler(httptransport.NewServer(
 		gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.GetCategories),
-		//endpoints.GetCategories,
 		decodeCategoriesReq,
 		encodeResponse,
 		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 	))
+	// Get Single Category
 	r.Methods("GET").Path("/category/{id}").Handler(httptransport.NewServer(
-		//gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.GetCategory),
-		endpoints.GetCategory,
+		gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.GetCategory),
 		decodeCategoryReq,
 		encodeResponse,
 		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 	))
+	// Update a Single Category
 	r.Methods("POST").Path("/category/{name}").Handler(httptransport.NewServer(
 		gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.UpdateCategory),
 		decodeUpdateReq,
 		encodeResponse,
 		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 	))
-	//return handlers.CORS()(r)
 	return r
 }
 

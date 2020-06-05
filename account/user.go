@@ -110,7 +110,8 @@ type Repository interface {
 	DeleteCreateReport(ctx context.Context, id string)(string, error)
 	// Speaker
 	CreateSpeaker(ctx context.Context, speaker Speaker) (string, error)
-	GetSpeaker(ctx context.Context, id string)(interface{}, error)
+	GetSpeaker(ctx context.Context, id string)(Speaker, error)
+	GetAllSpeaker(ctx context.Context)([]Speaker, error)
 	UpdateCreateSpeaker(ctx context.Context, speaker Speaker)(string, error)
 	DeleteCreateSpeaker(ctx context.Context, id string)(string, error)
 	// Category

@@ -259,7 +259,11 @@ type(
 		Id string	`json:"id"`
 	}
 	GetSpeakerResponse struct {
-		Speaker interface{} `json:"speaker"`
+		Speaker Speaker `json:"speaker"`
+	}
+	GetAllSpeakerRequest struct {}
+	GetAllSpeakerResponse struct {
+		Speaker []Speaker `json:"speaker"`
 	}
 	UpdateCreateSpeakerRequest struct {
 		Name string `json:"name"`
@@ -501,7 +505,9 @@ func decodeGetSpeakerRequest(ctx context.Context, r *http.Request)(interface{}, 
 	req = GetSpeakerRequest{Id:vars["id"]}
 	return req, nil
 }
-
+func decodeGetAllSpeakerRequest(ctx context.Context, r *http.Request)(interface{}, error){
+	return GetAllSpeakerRequest{}, nil
+}
 func decodeUpdateCreateSpeakerRequest(ctx context.Context, r *http.Request)(interface{}, error) {
 	var req UpdateCreateSpeakerRequest
 	err := json.NewDecoder(r.Body).Decode(&req)
@@ -521,13 +527,13 @@ func decodeDeleteCreateSpeakerRequest(ctx context.Context, r *http.Request)(inte
 }
 
 func decodeCategoryReq(ctx context.Context, r *http.Request)(interface{}, error){
-	//var req CreateCategoryRequest
-	//err := json.NewDecoder(r.Body).Decode(&req)
-	//if err != nil{
-	//	return nil, err
-	//}
-	//return req, nil
-	return GetCategoryTestRequest{}, nil
+	var req CreateCategoryRequest
+	err := json.NewDecoder(r.Body).Decode(&req)
+	if err != nil{
+		return nil, err
+	}
+	return req, nil
+	//return GetCategoryTestRequest{}, nil
 }
 
 func decodeCategoriesReq(ctx context.Context, r *http.Request)(interface{}, error){

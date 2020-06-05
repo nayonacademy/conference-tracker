@@ -390,19 +390,29 @@ func (s service) CreateSpeaker(ctx context.Context, name string, position string
 		level.Error(logger).Log("err",err)
 		return "", err
 	}
-	logger.Log("get category")
+	logger.Log("create speaker")
 	return "name", nil
 }
 
-func (s service) GetSpeaker(ctx context.Context, id string) (interface{}, error) {
+func (s service) GetSpeaker(ctx context.Context, id string) (Speaker, error) {
 	logger := log.With(s.logger,"method","GetSpeaker")
 	name, err := s.repostory.GetSpeaker(ctx, id)
 	if err != nil{
 		level.Error(logger).Log("err",err)
-		return "", err
+		return Speaker{}, err
 	}
-	logger.Log("get category", name)
+	logger.Log("get speaker", name)
 	return name, nil
+}
+
+func (s service) GetAllSpeaker(ctx context.Context)([]Speaker, error) {
+	logger := log.With(s.logger,"method","get speakers")
+	speaker, err := s.repostory.GetAllSpeaker(ctx)
+	if err != nil{
+		level.Error(logger).Log("err", err)
+		return []Speaker{}, err
+	}
+	return speaker, nil
 }
 
 func (s service) UpdateCreateSpeaker(ctx context.Context, name string, position string) (string, error) {
