@@ -94,7 +94,7 @@ type Repository interface {
 	DeleteCreateConference(ctx context.Context, id string)(string, error)
 	// Location
 	CreateLocation(ctx context.Context, location Location) (string, error)
-	GetLocation(ctx context.Context, id string)(interface{}, error)
+	GetLocation(ctx context.Context, id string)(Location, error)
 	UpdateCreateLocation(ctx context.Context, location Location)(string, error)
 	DeleteCreateLocation(ctx context.Context, id string)(string, error)
 	// Rating

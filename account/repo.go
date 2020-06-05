@@ -187,14 +187,14 @@ func (r repo) CreateLocation(ctx context.Context, location Location) (string, er
 	return "success", nil
 }
 
-func (r repo) GetLocation(ctx context.Context, id string) (interface{}, error) {
-	var profile string
+func (r repo) GetLocation(ctx context.Context, id string) (Location, error) {
 	var location Location
-	err := r.db.Find(&location, "id = ?",id)
-	if err != nil{
-		return "", RepoErr
+	result := r.db.Where("id = ?", id).First(&location).Scan(&location)
+	//result := r.db.First(&category).Scan(&category)
+	if result.Error != nil{
+		return Location{}, RepoErr
 	}
-	return profile, nil
+	return location, nil
 }
 
 func (r repo) UpdateCreateLocation(ctx context.Context, location Location) (string, error) {

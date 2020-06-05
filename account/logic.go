@@ -206,15 +206,15 @@ func (s service) CreateLocation(ctx context.Context, name string, date string, t
 	return location.Name, nil
 }
 
-func (s service) GetLocation(ctx context.Context, id string) (interface{}, error) {
+func (s service) GetLocation(ctx context.Context, id string) (Location, error) {
 	logger := log.With(s.logger,"method","GetLocation")
-	name, err := s.repostory.GetLocation(ctx, id)
+	location, err := s.repostory.GetLocation(ctx, id)
 	if err != nil{
 		level.Error(logger).Log("err",err)
-		return "", err
+		return Location{}, err
 	}
-	logger.Log("get category", name)
-	return name, nil
+	logger.Log("get location", location)
+	return location, nil
 }
 
 func (s service) UpdateCreateLocation(ctx context.Context, name string, date string, time string) (string, error) {

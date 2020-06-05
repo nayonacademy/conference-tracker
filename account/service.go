@@ -26,7 +26,7 @@ type Service interface {
 	DeleteCreateConference(ctx context.Context, id string)(string, error)
 	// Location
 	CreateLocation(ctx context.Context, name string, date string, time string) (string, error)
-	GetLocation(ctx context.Context, id string)(interface{}, error)
+	GetLocation(ctx context.Context, id string)(Location, error)
 	UpdateCreateLocation(ctx context.Context, name string, date string, time string)(string, error)
 	DeleteCreateLocation(ctx context.Context, id string)(string, error)
 	// Rating

@@ -151,7 +151,7 @@ type(
 		Id string	`json:"id"`
 	}
 	GetLocationResponse struct {
-		Location interface{} `json:"location"`
+		Location Location `json:"location"`
 	}
 	UpdateCreateLocationRequest struct {
 		Name string	`json:"name"`
