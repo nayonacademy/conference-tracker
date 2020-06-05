@@ -89,6 +89,13 @@ func NewHTTPServer(ctx context.Context, endpoints Endpoints) http.Handler{
 		encodeResponse,
 		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
 	))
+	// Create Location
+	r.Methods("POST").Path("/location").Handler(httptransport.NewServer(
+		gokitjwt.NewParser(JwtKeyFunc, jwt.SigningMethodHS256, gokitjwt.StandardClaimsFactory)(endpoints.CreateLocation),
+		decodeCreateLocationRequest,
+		encodeResponse,
+		append(options, httptransport.ServerBefore(gokitjwt.HTTPToContext()))...,
+	))
 	return r
 }
 

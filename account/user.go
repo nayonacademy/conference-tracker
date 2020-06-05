@@ -3,7 +3,6 @@ package account
 import (
 	"context"
 	"github.com/jinzhu/gorm"
-	"time"
 )
 
 type User struct {
@@ -47,8 +46,8 @@ type Conference struct {
 type Location struct {
 	gorm.Model
 	Name string	`json:"name"`
-	Date time.Month	`json:"date"`
-	Time time.Time	`json:"time"`
+	Date string	`json:"date"`
+	Time string	`json:"time"`
 }
 
 type Rating struct {

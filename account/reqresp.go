@@ -6,7 +6,6 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	"github.com/gorilla/mux"
 	"net/http"
-	"time"
 )
 
 type(
@@ -142,8 +141,8 @@ type(
 	}
 	CreateLocationRequest struct {
 		Name string	`json:"name"`
-		Date time.Month	`json:"date"`
-		Time time.Time	`json:"time"`
+		Date string	`json:"date"`
+		Time string	`json:"time"`
 	}
 	CreateLocationResponse struct {
 		OK string	`json:"ok"`
@@ -156,8 +155,8 @@ type(
 	}
 	UpdateCreateLocationRequest struct {
 		Name string	`json:"name"`
-		Date time.Month	`json:"date"`
-		Time time.Time	`json:"time"`
+		Date string	`json:"date"`
+		Time string	`json:"time"`
 	}
 	UpdateCreateLocationResponse struct {
 		OK string	`json:"ok"`

@@ -4,7 +4,6 @@ import (
 	"context"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
-	"time"
 )
 
 type service struct {
@@ -191,7 +190,7 @@ func (s service) DeleteCreateConference(ctx context.Context, id string) (string,
 	return name, nil
 }
 
-func (s service) CreateLocation(ctx context.Context, name string, date time.Month, time time.Time) (string, error) {
+func (s service) CreateLocation(ctx context.Context, name string, date string, time string) (string, error) {
 	logger := log.With(s.logger,"method","CreateLocation")
 	location := Location{
 		Name:  name,
@@ -203,8 +202,8 @@ func (s service) CreateLocation(ctx context.Context, name string, date time.Mont
 		level.Error(logger).Log("err",err)
 		return "", err
 	}
-	logger.Log("get category")
-	return "location", nil
+	logger.Log("create location")
+	return location.Name, nil
 }
 
 func (s service) GetLocation(ctx context.Context, id string) (interface{}, error) {
@@ -218,7 +217,7 @@ func (s service) GetLocation(ctx context.Context, id string) (interface{}, error
 	return name, nil
 }
 
-func (s service) UpdateCreateLocation(ctx context.Context, name string, date time.Month, time time.Time) (string, error) {
+func (s service) UpdateCreateLocation(ctx context.Context, name string, date string, time string) (string, error) {
 	logger := log.With(s.logger,"method","UpdateCreateLocation")
 	location := Location{
 		Name:  name,

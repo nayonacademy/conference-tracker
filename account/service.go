@@ -2,7 +2,6 @@ package account
 
 import (
 	"context"
-	"time"
 )
 
 type Service interface {
@@ -26,9 +25,9 @@ type Service interface {
 	UpdateCreateConference(ctx context.Context, name string,website string, about string,	phone string,email string,address string,city string,zipcode string,speakers []Speaker,	facebook string,twitter string,	instagram string,organizer_id int16, locations []Location, rating Rating)(string, error)
 	DeleteCreateConference(ctx context.Context, id string)(string, error)
 	// Location
-	CreateLocation(ctx context.Context, name string, date time.Month, time time.Time) (string, error)
+	CreateLocation(ctx context.Context, name string, date string, time string) (string, error)
 	GetLocation(ctx context.Context, id string)(interface{}, error)
-	UpdateCreateLocation(ctx context.Context, name string, date time.Month, time time.Time)(string, error)
+	UpdateCreateLocation(ctx context.Context, name string, date string, time string)(string, error)
 	DeleteCreateLocation(ctx context.Context, id string)(string, error)
 	// Rating
 	CreateRating(ctx context.Context, rate int16, comment string, caption string, attend_q bool, enjoy_q bool, location_q bool, connectPeer_q bool, awesome int16, great int16, average int16, poor int16, terrible int16, favorite bool, like bool ) (string, error)
